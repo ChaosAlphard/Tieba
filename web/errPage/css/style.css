@@ -1,0 +1,41 @@
+body{
+    margin: 0;
+    background: url("../pic/bg01.png") fixed bottom center / cover;
+}
+.snow{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 8;
+    pointer-events: none;
+}
+.info{
+    position: absolute;
+    top: calc(50vh - 200px);
+    left: calc(50vw - 600px);
+    width: 1200px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(180,120,160,0.4);/*rgba(140,120,210,0.4)*/
+    font-size: 42px;
+    color: #000000;
+    border-radius: 120px;
+    box-shadow: 0 0 40px 40px #CC88B5 inset;/*#9370DD,#1C60B2*/
+    z-index: 10;
+}
+.blur{
+    position: absolute;
+    top: calc(50vh - 200px);
+    left: calc(50vw - 600px);
+    width: 1200px;
+    height: 400px;
+    background: url("../pic/bg01.png") fixed bottom center / cover;
+    filter: blur(5px);
+    border-radius: 120px;
+    z-index: 6;
+}

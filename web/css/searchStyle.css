@@ -1,0 +1,59 @@
+body{
+    margin: 0;
+    background: #9370DD url("../img/bg.jpg") fixed top center / cover;
+}
+.base{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 128px auto;
+    width: 1200px;
+    border-radius: 36px;
+    box-shadow: 0 0 10px 10px #9370DD inset;
+    background: url("../img/bg-blur.jpg") fixed top center / cover;
+}
+.ruleDiv{
+    font-size: 24px;
+    color: #FFFFFF;
+    text-align: center;
+}
+.ruleDiv>p{
+    margin: 12px;
+}
+.searchForm>form{
+    display: flex;
+    border: 1px solid #9370DD;
+}
+.searchForm>form>*{
+    padding: 0;
+    border: 0;
+    height: 36px;
+    font-size: 24px;
+    color: #FFFFFF;
+}
+.searchForm input{
+    background-color: rgba(0,0,0,0);
+    width: 640px;
+}
+.searchForm button{
+    background-color: rgba(80,140,240,0.4);
+    width: 36px;
+}
+.resultDiv{
+    margin: 40px;
+    width: 800px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.resultDiv>a{
+    display: block;
+    padding: 12px;
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 24px;
+    text-decoration: none;
+    color: #000000;
+    margin: 8px;
+}

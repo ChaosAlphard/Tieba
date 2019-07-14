@@ -1,0 +1,231 @@
+body{
+    margin: 0;
+    background: #9370DD url("../img/bg.jpg") fixed top center / cover;
+}
+
+/* loading page */
+.loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    background: url("../img/bg-blur.jpg") fixed top center / cover;
+    transition: opacity 800ms ease-out;
+    z-index: 15;
+}
+.loading>span{
+    display: block;
+    color: #FFFFFF;
+}
+.wel{
+    font-size: 72px;
+    text-shadow: 0 0 25px #9370DD;
+}
+.lod{
+    font-size: 36px;
+    text-shadow: 0 0 25px #FFFFFF;
+}
+.cir{
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    min-height: 80px;
+    border: 40px double #FFFFFF;
+    /*border-top-style: dotted;*/
+    /*border-bottom-style: dotted;*/
+    border-top-color: #EE2244;
+    border-bottom-color: #4C8BF5;
+    border-radius: 50%;
+    transform-origin: center center;
+    animation: rot 3s ease-in-out infinite;
+}
+
+.support{
+    font-size: 42px;
+    color: #FFFFFF;
+    text-shadow: 0 0 5px #9370DD;
+}
+.chr{
+    font-size: 42px;
+    color: #4C8BF5;
+    text-shadow: 0 0 5px #4C8BF5;
+}
+.ff{
+    font-size: 42px;
+    color: #EE2244;
+    text-shadow: 0 0 5px #EE2244;
+}
+
+@keyframes rot {
+    0%,5%{
+        transform: rotateZ(0deg);
+    }
+    45%,55%{
+        transform: rotateZ(180deg);
+    }
+    95%,100%{
+        transform: rotateZ(360deg);
+    }
+}
+
+.base{
+    position: relative;
+    display: flex;
+    margin: 128px auto;
+    width: 1200px;
+    border-radius: 36px;
+    box-shadow: 0 0 5px 5px #673AB7;
+    background: url("../img/bg-blur.jpg") fixed top center / cover;
+}
+
+/* 左侧内容 */
+.leftblock{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 280px;
+}
+
+.leftblock>div{
+    /*outline: 1px dashed red;*/
+}
+.avatar{
+    margin-top: 35px;
+    width: 210px;
+    height: 210px;
+}
+.search{
+    width: 206px;
+    height: 36px;
+    border: 2px solid #9370DD;
+    margin-bottom: 20px;
+}
+.search>form{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+.search>form>input,.search>form>button{
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    color: #FFFFFF;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    height: 36px;
+    line-height: 36px;
+    display: block;
+}
+.search>form>input{
+    width: 170px;
+    background-color: rgba(80,140,240,0.4);
+}
+.search>form>button{
+    width: 36px;
+    background-color: rgba(240,40,70,0.4);
+}
+.horizon{
+    border-top: 2px solid #9370DD;
+    border-bottom: 2px solid #9370DD;
+    width: 210px;
+    font-size: 24px;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.favbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    /*flex-flow: row wrap;*/
+    width: 280px;
+}
+.favbar>a{
+    display: block;
+    font: Normal Normal Normal 18px/24px "Microsoft YaHei UI";
+    text-decoration: none;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 8px 0 8px 0;
+    margin: 8px 0 8px 0;
+    width: 210px;
+    height: 24px;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 右侧内容 */
+.rightblock{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 920px;
+}
+
+.lastTie{
+    width: 820px;
+    min-height: 120px;
+    max-height: 520px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    border-radius: 36px;
+    background-color: #9370DD66;
+    box-shadow: 0 0 2px 2px #9370DD;
+}
+.lastTie>a{
+    text-decoration: none;
+    color: #FFFFFF;
+}
+.lastTie>div,.lastTie>a{
+    width: 750px;
+    padding-left: 35px;
+    padding-right: 35px;
+    color: #FFFFFF;
+}
+.tieTitle{
+    display: block;
+    height: 42px;
+    font-size: 28px;
+    line-height: 42px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.tieMain{
+    min-height: 64px;
+    max-height: 440px;
+    font-size: 18px;
+    line-height: 18px;
+    background-color: #50287866;
+    overflow: hidden;
+}
+.tieMain fieldset{
+    padding: 0 5px 5px 5px;
+    margin: 0 0 5px 0;
+}
+.tieTime{
+    height: 40px;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.footer>a{
+    color: #9370DD;
+    text-decoration: none;
+}

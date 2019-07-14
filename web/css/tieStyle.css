@@ -1,0 +1,266 @@
+body{
+    margin: 0;
+    background: #9370DD url("../img/bg.jpg") fixed top center / cover;
+    --BC:#9370DD; /* border color */
+    --BCA:#9370DD33;
+}
+.base{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 128px auto;
+    padding: 35px;
+    width: 1000px;
+    border-radius: 36px;
+    box-shadow: 0 0 10px 10px rgba(240,240,240,0.6);
+    background-color: #F0F0F0;
+}
+
+.barName{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 36px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.barName>a{
+    text-decoration: none;
+    color: #000000;
+}
+.barName>div{
+    font-size: 24px;
+    width: 144px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 24px;
+    cursor: pointer;
+    background-color: #D2D2D2;
+}
+
+.tieTitle{
+    position: sticky;
+    top: 36px;
+    background-color: #F0F0F0;
+    font-size: 28px;
+    border-top: 2px solid var(--BC);
+    border-bottom:2px solid var(--BC);
+    padding: 10px 0 10px 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.reContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.reBox{
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    border-bottom: 2px solid var(--BC);
+    min-height: 250px;
+}
+
+/* 头像, 用户名 */
+.boxLeft{
+    width: 180px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.boxLeft>img{
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 4px 4px var(--BC);
+}
+.boxLeft>span{
+    font-size: 18px;
+}
+.dreply{
+    margin: 5px;
+    display: block;
+    border-radius: 12px;
+    border: 1px solid var(--BC);
+    padding: 5px;
+    transition: background-color 1s, color 1s;
+    cursor: pointer;
+}
+.dreply:hover{
+    background-color: var(--BC);
+    color: #FFFFFF;
+}
+
+/* 回复内容 */
+.boxRight{
+    position: relative;
+    width: 818px;
+    background-color: #FFFFFF;
+    border-left: 2px solid var(--BC);
+}
+.reMain{
+    position: relative;
+    padding: 10px;
+    font-size: 18px;
+    word-wrap: break-word;
+}
+.reTime{
+    height: 30px;
+}
+.reTime>div{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px 0 0 0;
+    background-color: #F0F0F0;
+    text-align: right;
+    font-size: 21px;
+}
+.reMain fieldset,.replyContent fieldset{
+    padding: 0 5px 5px 5px;
+    margin: 0 0 5px 0;
+    background-color: var(--BCA);
+}
+
+/* 翻页 */
+.rePage{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin-top: 30px;
+    padding: 5px 0 5px 0;
+    border-top: 2px solid var(--BC);
+    border-bottom: 2px solid var(--BC);
+}
+.rePage>a{
+    display: block;
+    color: #000000;
+    margin: 0 3px 0 3px;
+    padding: 2px 6px 2px 6px;
+    text-decoration: none;
+    border: 1px solid var(--BC);
+    background-color: #E3E3E3;
+}
+.rePage>a:hover{
+    background-color: var(--BC);
+}
+.rePage>div:nth-of-type(1){
+    margin: 0 10px 0 10px;
+}
+.rePage>div>input,.rePage>div>button{
+    margin: 0;
+    padding: 4px;
+}
+.rePage>div>input{
+    width: 21px;
+}
+.rePage>div:nth-last-of-type(1){
+    position: absolute;
+    right: 10px;
+}
+
+.tieReply{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+    border: 2px solid var(--BC);
+}
+.replyExpression{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    font-size: 24px;
+    background-color: #E3E3E3;
+}
+.replyExpression > div{
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    margin: 2px;
+    transition: background-color 1s;
+}
+.replyExpression > div:hover{
+    background-color: #FFFFFF;
+}
+.eps{
+    position: relative;
+    width: 36px;
+    height: 36px;
+}
+.epses{
+    position: absolute;
+    border: 2px solid var(--BC);
+    box-sizing: border-box;
+    bottom: 0;
+    left: 36px;
+    width: 524px;
+    background-color: #F0F0F0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+.epses>img{
+    padding: 10px;
+}
+.epses>img:hover{
+    background-color: #FFFFFF;
+}
+
+.replyContent{
+    width: 100%;
+    min-height: 180px;
+}
+.replySubmit{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: 18px;
+}
+
+.toTop{
+    position: fixed;
+    color: #FFFFFF;
+    font-size: 72px;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/*
+white-space:
+值       空白符 换行符 自动换行
+normal   合并  忽略   允许
+nowrap   合并  忽略   不允许
+pre      保留  保留   不允许
+pre-wrap 保留  保留   允许
+pre-line 合并  保留   允许
+*/
