@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    background: #9370DD url("../img/bg.jpg") fixed top center / cover;
+    background: #291D43 url("https://s2.ax1x.com/2020/03/05/3TiRV1.jpg") fixed top center / cover;
 }
 .base{
     position: relative;
@@ -12,7 +12,7 @@ body{
     width: 1200px;
     border-radius: 36px;
     box-shadow: 0 0 10px 10px #9370DD inset;
-    background: url("../img/bg-blur.jpg") fixed top center / cover;
+    background: url("https://s2.ax1x.com/2020/03/05/3TiWUx.jpg") fixed top center / cover;
 }
 .ruleDiv{
     font-size: 24px;

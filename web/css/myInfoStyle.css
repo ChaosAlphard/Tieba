@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    background: #9370DD url("../img/bg.jpg") fixed top center / cover;
+    background: #291D43 url("https://s2.ax1x.com/2020/03/05/3TiRV1.jpg") fixed top center / cover;
 }
 .info{
     position: relative;
@@ -10,7 +10,7 @@ body{
     padding: 30px;
     box-shadow: 0 0 20px 10px #9370DD inset;
     margin: calc(50vh - 300px) calc(50vw - 600px);
-    background: #9370DD url("../img/bg-blur-cover.jpg") fixed top center / cover;
+    background: #291D43 url("https://s2.ax1x.com/2020/03/05/3TigbR.jpg") fixed top center / cover;
 }
 
 /* 用户信息 */
