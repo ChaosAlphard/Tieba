@@ -6,7 +6,7 @@ if(!window.XMLHttpRequest){
 
 /* 登陆状态检测 */
 if(uid===""||usr===""){
-    alert("登录状态异常!\n没有找到Session, 请在主界面更新Session");
+    alert("登录状态异常!");
     location.replace("./index.jsp");
 }
 
@@ -61,36 +61,36 @@ file.onchange=()=>{
 };
 
 sub.onclick=()=>{
-    let uppic;
-    uppic=cropper.getCroppedCanvas({
+    let uppic = cropper.getCroppedCanvas({
         width: 210,
         height: 210,
         imageSmoothingEnabled: true,
         imageSmoothingQuality: 'high'
     }).toDataURL("image/jpeg");
-    console.log(uppic);
 
-    if(uppic.indexOf("data:image/jpeg;base64,")!==-1){
-        let data=new FormData();
-        data.append("img",uppic);
-        data.append("uid",uid);
+    if(uppic.indexOf("data:image/jpeg;base64,")===-1){
+        alert("裁剪图片出错,请重试");
+        return;
+    }
 
-        let xhr=new XMLHttpRequest();
-        xhr.open("post","UploadServlet",true);
-        xhr.send(data);
-        xhr.onreadystatechange=()=>{
-            if(xhr.readyState===4&&xhr.status===200){
-                let xhrt=xhr.responseText;
-                if(xhrt==="err"){
-                    alert("上传失败,服务器找不到路径\nV:/RNC/IDEA/Tieba/web/img/avatar/")
-                } else {
-                    alert("上传成功\n更新浏览器缓存以查看效果");
-                    location.reload();
-                }
+    let data=new FormData();
+    data.append("img",uppic);
+    data.append("uid",uid);
+
+    let xhr=new XMLHttpRequest();
+    xhr.open("post","UploadServlet",true);
+    xhr.send(data);
+
+    xhr.onreadystatechange=()=>{
+        if(xhr.readyState===4&&xhr.status===200){
+            let xhrt=xhr.responseText;
+            if(xhrt==="suc"){
+                alert("上传成功\n刷新浏览器缓存以查看效果");
+                location.reload();
+            } else {
+                alert("上传失败,服务器找不到路径\nV:/RNC/DEPLOY/Tieba/web/img/avatar/")
             }
         }
-    } else {
-        alert("裁剪图片出错,请重试");
     }
 };
 

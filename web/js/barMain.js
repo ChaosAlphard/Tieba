@@ -75,9 +75,9 @@ follow.onclick=()=>{
                 }
             } else if(res==="dataErr"){
                 alert("数据异常");
-                location.reload(true);
+                location.reload();
             } else {
-                alert("请登录再试");
+                alert("请登录后再试");
             }
         }
     });
@@ -154,7 +154,6 @@ tieSubmit.onclick=()=>{
             showData:true,
             success:(xhr)=>{
                 const res = xhr.responseText;
-                console.log(res);
                 if(res==="suc"){
                     alert("发帖成功");
                     location.reload(true);
@@ -162,12 +161,10 @@ tieSubmit.onclick=()=>{
                     alert("数据异常");
                 } else if(res==="daoErr"){
                     alert("发帖失败, 服务器繁忙");
-                } else if(res==="lvErr"){
-                    alert("你的账号没有发帖权限")
                 } else {
                     alert("发帖失败, 未知错误");
                 }
-                tieSubmit.innerHTML = "提交";
+                tieSubmit.innerHTML="提交";
                 tieSubmit.disabled=false;
             }
         })

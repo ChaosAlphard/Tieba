@@ -62,71 +62,98 @@ logsub.onclick=()=>{
     let logpwd = sel(".logpwd");
     let usrval = logusr.value;
     let pwdval = logpwd.value;
+
     if(usrval!==""&&pwdval!==""){
-        logmpt.innerHTML="正在登录";
-        ajax({
-            isPost: true,
-            url: "LoginServlet",
-            data: {
-                "aot": usrval,
-                "pwd": pwdval
-            },
-            success:(xhr)=>{
-                const res = xhr.responseText;
-                if(res==="err"){
-                    logmpt.innerHTML="登录失败,账号/密码不符";
-                } else if(res==="blocked"){
-                    logmpt.innerHTML="--!你的账号已被封禁!--";
-                } else if(res!==""&&res!==void 0){
-                    const json = JSON.parse(res);
-                    sel("#fuid").value=json[0];
-                    sel("#fusr").value=json[1];
-                    sel("#for").submit();
-                } else {
-                    logmpt.innerHTML="登录失败,未知错误";
-                }
-            }
-        });
-        // let xhr = new XMLHttpRequest();
-        // xhr.open("post","LoginServlet",true);
-        // xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        // xhr.send("aot="+usrval+"&pwd="+pwdval);
-        // xhr.onreadystatechange=()=>{
-        //     if(xhr.readyState===4&&xhr.status===200){
-        //         const xhrt = xhr.responseText;
-        //         if(xhrt!=="err"&&xhrt!=="blocked"&&xhrt!==""&&xhrt!==null&&xhrt!==void 0){
-        //             let json=JSON.parse(xhrt);
-        //             sel("#fuid").value=json[0];
-        //             sel("#fusr").value=json[1];
-        //             sel("#for").submit();
-        //         } else if(xhrt==="blocked"){
-        //             logmpt.innerHTML="--!你的账号已被封禁!--";
-        //         } else if(xhrt==="err"){
-        //             logmpt.innerHTML="登录失败,账号/密码不符";
-        //         } else {
-        //             logmpt.innerHTML="登录失败,账号/密码不符";
-        //         }
-        //     }
-        // };
-    } else {
         logmpt.innerHTML="不能为空";
+        return;
     }
+
+    logmpt.innerHTML="正在登录";
+    ajax({
+        isPost: true,
+        url: "LoginServlet",
+        data: {
+            "aot": usrval,
+            "pwd": pwdval
+        },
+        success: xhr => {
+            const xhrt = xhr.responseText;
+            if(xhrt==="err") {
+                logmpt.innerHTML="登录失败,账号/密码不符";
+            } else if(xhrt==="blocked") {
+                logmpt.innerHTML="--!你的账号已被封禁!--";
+            } else if(xhrt!==""&&xhrt!==null&&xhrt!==void 0) {
+                let json=JSON.parse(xhrt);
+                sel("#fuid").value=json[0];
+                sel("#fusr").value=json[1];
+                sel("#for").submit();
+            } else {
+                logmpt.innerHTML="登录失败";
+            }
+        }
+    });
 };
+
+let captchaCode;
 
 /* 注册 */
 /* 验证码生成 */
 function captchaSet(){
-    const base = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0";
+    captcha.width = 180;
+    captcha.height = 40;
+
+    const context = captcha.getContext("2d");
+    context.fillStyle = "#FFFFFF";
+    context.fillRect(0,0,180,40);
+
+    captchaCode = getCaptchaCode();
+
+    //验证码
+    for(let i = 0; i<captchaCode.length; i++){
+        let x = 40+i*20;
+        let y = 20+10*Math.random();
+        let code = captchaCode[i];
+        context.font = "bold 20px Arial";
+        context.fillStyle = getCaptchaColor();
+        // context.fillText(txt, x, y)
+
+        // 平移
+        context.translate(x,y);
+        let deg = Math.random()*90*Math.PI / 180;
+        // 旋转
+        context.rotate(deg);
+        // 绘制
+        context.fillText(code, 0, 0);
+        // 归位
+        context.rotate(-deg);
+        context.translate(-x,-y)
+    }
+
+    for(let i=0; i<8; i++){
+        //干扰线
+        context.beginPath();
+        context.moveTo(Math.random()*180,Math.random()*40);
+        context.lineTo(Math.random()*180,Math.random()*40);
+        context.stroke();
+        //干扰点
+        context.strokeRect(Math.random()*180,Math.random()*40,2,2)
+    }
+}
+
+function getCaptchaCode() {
+    const base = Array.from("123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0");
     let str="";
     for(let i=0;i<6;i++){
-        str+=base.charAt(Math.floor(Math.random()*36))
+        str+=base[Math.floor(Math.random()*base.length)]
     }
-    let r=Math.floor(Math.random()*210);
-    let g=Math.floor(Math.random()*210);
-    let b=Math.floor(Math.random()*210);
-    captcha.style.background=`linear-gradient(90deg, rgba(0,0,0,0) 60%, rgba(${r},${g},${b},0.2) 65%, rgb(${r},${g},${b}))`;
-    captcha.innerHTML=str;
-    console.log(str);
+    return str;
+}
+
+function getCaptchaColor(){
+    let r = Math.floor(Math.random()*256);
+    let g = Math.floor(Math.random()*256);
+    let b = Math.floor(Math.random()*256);
+    return `rgb(${r}, ${g}, ${b})`
 }
 
 regbtn.onclick=()=>{
@@ -198,7 +225,7 @@ function checkPwdAgain(){
     return result;
 }
 function checkCaptcha(){
-    let result=(ipts[4].value.toUpperCase()===captcha.innerHTML);
+    let result=(ipts[4].value.toUpperCase()===captchaCode);
     if(result){
         tips[4].innerHTML="正确";
     } else {
@@ -243,42 +270,22 @@ regsub.onclick=()=>{
                 "nickname": ipts[1].value,
                 "password": ipts[2].value
             },
-            success:(xhr)=>{
-                const res = xhr.responseText;
-                if(res==="suc"){
+            success: xhr => {
+                const xhrt = xhr.responseText;
+                console.log(xhrt);
+                if(xhrt==="suc"){
                     alert("注册成功");
                     regwin.style.display="none";
                     logwin.style.display="block";
-                } else if(res==="aot"){
+                } else if(xhrt==="aot") {
                     regmpt.innerHTML="账户名已存在";
-                } else if(res==="usr"){
+                } else if(xhrt==="usr") {
                     regmpt.innerHTML="昵称已存在";
                 } else {
                     regmpt.innerHTML="注册失败";
                 }
             }
         });
-        // let xhr = new XMLHttpRequest();
-        // xhr.open("post","RegisterServlet",true);
-        // xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        // xhr.send("account="+ipts[0].value+"&nickname="+ipts[1].value+"&password="+ipts[2].value);
-        // xhr.onreadystatechange=()=>{
-        //     if(xhr.readyState===4&&xhr.status===200){
-        //         let xhrt=xhr.responseText;
-        //         console.log(xhrt!=="");
-        //         if(xhrt==="suc"){
-        //             alert("注册成功");
-        //             regwin.style.display="none";
-        //             logwin.style.display="block";
-        //         } else if(xhrt==="aot") {
-        //             regmpt.innerHTML="账户名已存在";
-        //         } else if(xhrt==="usr") {
-        //             regmpt.innerHTML="昵称已存在";
-        //         } else {
-        //             regmpt.innerHTML="注册失败";
-        //         }
-        //     }
-        // };
     } else {
         regmpt.innerHTML="不满足注册条件";
     }

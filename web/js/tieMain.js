@@ -77,9 +77,9 @@ favorite.onclick=()=>{
                 }
             } else if(res==="dataErr"){
                 alert("数据异常");
-                location.reload(true);
+                location.reload();
             } else {
-                alert("请登录再试");
+                alert("请登录后再试");
             }
         }
     });
@@ -120,7 +120,7 @@ eps.onclick=()=>{
 for(let i=0;i<imgs.length;i++){
     imgs[i].onclick=()=>{
         const img = document.createElement('img');
-        img.src=`img/eps/${i}.png`;
+        img.src=`/img/eps/${i}.png`;
         // replyContent.appendChild(img); //原始插入
         /* 优化表情插入 */
         let div = selAll(".replyContent>div");
@@ -177,20 +177,17 @@ replySubmit.onclick=()=>{
             showData:true,
             success:(xhr)=>{
                 const res = xhr.responseText;
-                console.log(res);
                 if(res==="suc"){
                     alert("回复成功");
-                    location.reload(true);
+                    location.reload();
                 } else if(res==="dataErr"){
                     alert("数据异常");
                 } else if(res==="daoErr"){
                     alert("回复失败, 服务器繁忙");
-                } else if(res==="lvErr"){
-                    alert("你的账号没有回复权限");
                 } else {
                     alert("回复失败, 未知错误");
                 }
-                tieSubmit.innerHTML = "提交";
+                replySubmit.innerHTML="提交";
                 replySubmit.disabled=false;
             }
         })
