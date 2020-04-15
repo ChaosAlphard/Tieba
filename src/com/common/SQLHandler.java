@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class SQLHandler {
-    public static<T> T queryData(String sql, Map<Integer, Object> params, Class<T> clazz) {
+    public static<T> T querySingle(String sql, Map<Integer, Object> params, Class<T> clazz) {
         try(ConnSQL conn = new ConnSQL();
             PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
 
@@ -38,7 +38,7 @@ public class SQLHandler {
         }
     }
 
-    public static<T> List<T> queryDataList(String sql, Map<Integer, Object> params, Class<T> clazz) {
+    public static<T> List<T> queryMultiple(String sql, Map<Integer, Object> params, Class<T> clazz) {
         try(ConnSQL conn = new ConnSQL();
             PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
 
