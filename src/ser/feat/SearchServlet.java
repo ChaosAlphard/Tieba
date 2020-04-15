@@ -1,6 +1,5 @@
 package ser.feat;
 
-import com.common.ConnSQL;
 import com.dao.BarDao;
 import com.model.Bar;
 
@@ -11,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "SearchServlet", urlPatterns = {"/SearchServlet"})
@@ -30,15 +27,10 @@ public class SearchServlet extends HttpServlet {
         if (bar!=null) {
             String rs = bar.replaceAll(" ","");
             String search = String.join("%",rs.split(""));
+
             BarDao dao = new BarDao();
-            List<Bar> lis = new ArrayList<>();
-            try {
-                lis = dao.FindBars(search);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
-            }
+            List<Bar> lis = dao.FindBars(search);
+
             request.setAttribute("list",lis);
             RequestDispatcher dis = request.getRequestDispatcher("search.jsp");
             dis.forward(request,response);

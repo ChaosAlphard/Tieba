@@ -1,6 +1,5 @@
 package ser.feat;
 
-import com.common.ConnSQL;
 import com.dao.UserDao;
 import com.model.User;
 
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
 public class RegisterServlet extends HttpServlet {
@@ -29,29 +27,22 @@ public class RegisterServlet extends HttpServlet {
         System.out.println(pwd);
 
         UserDao dao=new UserDao();
-        try {
-            //判断账户名是否存在
-            User u = dao.FindSingle("Account",aot);
-            if (u.getAccount()!=null){
-                result="aot";
+        //判断账户名是否存在
+        User u = dao.FindSingle("Account",aot);
+        if (u!=null){
+            result="aot";
+        } else {
+            //判断昵称是否存在
+            u = dao.FindSingle("Username",usr);
+            if(u!=null){
+                result="usr";
             } else {
-                //判断昵称是否存在
-                u = dao.FindSingle("Username",usr);
-                if(u.getUsername()!=null){
-                    result="usr";
-                } else {
-                    //判断是否添加成功
-                    int i=dao.Register(aot,usr,pwd);
-                    if(i!=0){
-                        result="suc";
-                    }
+                //判断是否添加成功
+                int i=dao.Register(aot,usr,pwd);
+                if(i!=0){
+                    result="suc";
                 }
             }
-        } catch (SQLException e) {
-            result="err";
-            e.printStackTrace();
-        } finally {
-            ConnSQL.closeSQL();
         }
 
         PrintWriter out=response.getWriter();

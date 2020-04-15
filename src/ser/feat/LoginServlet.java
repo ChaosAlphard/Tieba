@@ -1,6 +1,5 @@
 package ser.feat;
 
-import com.common.ConnSQL;
 import com.dao.UserDao;
 import net.sf.json.JSONArray;
 
@@ -10,7 +9,6 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
-import java.sql.SQLException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
@@ -25,17 +23,11 @@ public class LoginServlet extends HttpServlet {
 
         String account = request.getParameter("aot");
         String password = request.getParameter("pwd");
-        String[] info = new String[3];
 
         UserDao dao=new UserDao();
-        try {
-            info=dao.Login(account,password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnSQL.closeSQL();
-        }
+        String[] info = dao.Login(account,password);
         System.out.println("info:"+info[0]+"-"+info[1]+"-"+info[2]);
+
         if(info[0]!=null&&info[1]!=null&&info[2]!=null){
             if(info[2].equals("0")){
                 result="blocked";
