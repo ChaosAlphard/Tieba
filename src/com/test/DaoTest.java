@@ -11,6 +11,7 @@ import java.util.List;
 public class DaoTest {
     public static void main(String[] args){
         DaoTest test = new DaoTest();
+        test.isBarExist("Java");
     }
 
     private void isBarExist(String name) {
