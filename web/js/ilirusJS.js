@@ -10,6 +10,11 @@ function selAll(x) {
     return document.querySelectorAll(x);
 }
 
+/* 简化控制台输出 */
+function log(x) {
+    console.log(x);
+}
+
 class Ilirus {
     constructor(){}
 

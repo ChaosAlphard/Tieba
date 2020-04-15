@@ -1,3 +1,11 @@
+input:focus,
+textarea:focus,
+span:focus,
+a:focus,
+button:focus{
+    outline:none;
+} /* 去掉chrome下input和textarea的选中发光样式 */
+
 @font-face {
     font-family: "FontAwesome";
     src: url("fontawesome.woff2") format("woff2"),

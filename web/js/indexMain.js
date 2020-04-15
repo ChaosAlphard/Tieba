@@ -3,18 +3,40 @@
 /* index.jsp use this file */
 
 const img=sel("#avatar");
-img.addEventListener('error',()=>{
-    img.src="img/avatar/0.jpg";
-});
-img.src=`./img/avatar/${uid}.jpg`;
-// img.onerror=()=>{
-//     img.src="./img/avatar/0.jpg";
-// };
+img.src="./img/avatar/"+uid+".jpg";
+img.onerror=()=>{
+    img.src="./img/avatar/0.jpg";
+};
 
 /* loading page */
 if(usr !== ""){
-    sel(".wel").innerHTML=`Welcome, ${usr}`;
+    sel(".wel").innerHTML="Welcome, "+usr;
 }
+
+const rightBlock = sel(".rightblock");
+const favBar = sel(".favbar");
+
+(async function() {
+    try {
+        setTimeout(()=>{
+            sel(".lod").innerHTML="链接超时";
+        },10000);
+        const awaitLogin = await autoLogin();
+        if(awaitLogin==="reload") {
+            location.reload()
+        }
+        if(uid) {
+            await Promise.all([getRecentlyTie(), getFavBars()]);
+        } else {
+            await getRecentlyTie();
+        }
+    } catch(e) {
+        sel(".lod").innerHTML="数据获取失败";
+        console.log(e);
+    } finally {
+        hiddenLoading();
+    }
+}());
 
 function hiddenLoading() {
     let lod = sel(".loading");
@@ -26,21 +48,22 @@ function hiddenLoading() {
     },1300);
 }
 
-const rightBlock = sel(".rightblock");
-const favBar = sel(".favbar");
-
-void async function() {
-        await getRecentlyTie().catch(e=>{
-            sel(".lod").innerHTML="数据获取失败";console.log(e)
+function autoLogin() {
+    return new Promise(resolve => {
+        ajax({
+            isPost:false,
+            url:"LoginServlet",
+            data:{"key":"value"},
+            success:(xhr)=>{
+                console.log(xhr.responseText);
+                resolve(xhr.responseText);
+                // if(xhr.responseText==="reload") {
+                //     location.reload();
+                // }
+            }
         });
-        if(uid) {
-            await getFavBars().catch(e=>{
-                sel(".lod").innerHTML="数据获取失败";console.log(e)
-            });
-        }
-        hiddenLoading();
-        appendIframe();
-}();
+    });
+}
 
 function getRecentlyTie() {
     return new Promise((resolve, reject) => {
@@ -111,11 +134,4 @@ function getFavBars() {
             }
         })
     })
-}
-
-function appendIframe() {
-    const iframe = document.createElement('iframe');
-    iframe.src="http://music.163.com/outchain/player?type=0&id=2483570337&auto=0&height=430";
-    iframe.setAttribute("style","width:330px; height:300px; position:fixed; left:0; bottom:0; margin:0; border:none; z-index:12;");
-    sel("body").appendChild(iframe);
 }
