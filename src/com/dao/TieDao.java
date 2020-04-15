@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.common.ConnSQL;
+import com.common.SQLHandler;
 import com.model.Tie;
 import com.tools.DBTool;
 
@@ -9,190 +10,100 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TieDao {
     public Tie FindByID(int tieID) {
-        String sql = "SELECT * FROM ties WHERE TieID=?";
-        Tie tie = null;
+        String sql = "SELECT * FROM ties WHERE TieID=? limit 1";
 
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
-            pst.setInt(1,tieID);
-            final ResultSet rs = pst.executeQuery();
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, tieID);
 
-            tie = DBTool.setData(rs, Tie.class);
-
-            rs.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return tie;
+        return SQLHandler.querySingle(sql, map, Tie.class);
     }
 
     public List<Tie> FindByBarID(int barID) {
-        String sql = "SELECT * FROM ties WHERE BarID=? AND Visible=1 ORDER BY UpdateTime DESC";
-        List<Tie> lis = new ArrayList<>();
+        String sql = "SELECT * FROM ties WHERE Visible=1 AND BarID=? ORDER BY UpdateTime DESC";
 
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
-            pst.setInt(1,barID);
-            final ResultSet rs = pst.executeQuery();
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, barID);
 
-            lis = DBTool.setDataList(rs,Tie.class);
-
-            System.out.println("TieDao: FindTiesByBarID>>>>\n"+pst.toString());
-            rs.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return lis;
+        return SQLHandler.queryMultiple(sql, map, Tie.class);
     }
 
     public List<Tie> findEliteByBarID(int barID) {
-        String sql = "SELECT * FROM ties WHERE Elite=1 AND BarID=? AND Visible=1 ORDER BY UpdateTime DESC";
-        List<Tie> lis = new ArrayList<>();
+        String sql = "SELECT * FROM ties WHERE Elite=1 AND Visible=1 AND BarID=? ORDER BY UpdateTime DESC";
 
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, barID);
 
-            pst.setInt(1,barID);
-            final ResultSet rs = pst.executeQuery();
-
-            lis = DBTool.setDataList(rs, Tie.class);
-
-            System.out.println("TieDao: findEliteByBarID>>>>\n"+pst.toString());
-            rs.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return lis;
+        return SQLHandler.queryMultiple(sql, map, Tie.class);
     }
 
     public List<Tie> findDeletedTie(String tieUser) {
         String sql = "SELECT * FROM ties WHERE Visible=0 AND TieUser=? ORDER BY PostTime DESC";
-        List<Tie> lis = new ArrayList<>();
 
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, tieUser);
 
-            pst.setString(1,tieUser);
-            final ResultSet rs = pst.executeQuery();
-
-            lis = DBTool.setDataList(rs, Tie.class);
-
-            System.out.println("TieDao: findDeletedTie>>>>\n"+pst.toString());
-            rs.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lis;
+        return SQLHandler.queryMultiple(sql, map, Tie.class);
     }
 
     public List<Tie> FindByPage(int barID, int pageStart, int pageAmount) {
         String sql = "SELECT * from ties WHERE BarID=? AND TieID>=? LIMIT ?";
-        List<Tie> lis = new ArrayList<>();
 
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, barID);
+        map.put(2, (pageStart-1)*pageAmount+1);
+        map.put(3, pageAmount);
 
-            pst.setInt(1,barID);
-            pst.setInt(2,(pageStart-1)*pageAmount+1);
-            pst.setInt(3,pageAmount);
-            final ResultSet rs = pst.executeQuery();
-
-            lis = DBTool.setDataList(rs, Tie.class);
-
-            System.out.println("TieDao: FindByPage>>>>\n"+pst.toString());
-            rs.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lis;
+        return SQLHandler.queryMultiple(sql,map,Tie.class);
     }
 
     public List<Tie> findRecentlyTie() {
         String sql = "SELECT * FROM ties WHERE Visible=1 ORDER BY UpdateTime DESC LIMIT 10";
-        List<Tie> lis = new ArrayList<>();
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
 
-            final ResultSet rs = pst.executeQuery();
+        Map<Integer, Object> map = new HashMap<>();
 
-            lis = DBTool.setDataList(rs, Tie.class);
-
-            System.out.println("TieDao: recentlyTie>>>>\n"+pst.toString());
-            rs.close();
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return lis;
+        return SQLHandler.queryMultiple(sql, null, Tie.class);
     }
 
     public int deleteTie(int tieID) {
         String sql = "UPDATE ties SET Visible=0 WHERE TieID=?";
-        int i= 0;
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
 
-            pst.setInt(1,tieID);
-            i = pst.executeUpdate();
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, tieID);
 
-            System.out.println("deleteTie:\n"+pst.toString());
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return SQLHandler.update(sql, map);
     }
 
     public int restoreTie(int tieID) {
         String sql = "UPDATE ties SET Visible=1 WHERE TieID=?";
-        int i= 0;
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
 
-            pst.setInt(1,tieID);
-            i = pst.executeUpdate();
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, tieID);
 
-            System.out.println("restoreTie:\n"+pst.toString());
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return SQLHandler.update(sql, map);
     }
 
     public int setTieElite(int tieID) {
         String sql = "UPDATE ties SET Elite=1 WHERE TieID=?";
-        int i= 0;
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
 
-            pst.setInt(1,tieID);
-            i = pst.executeUpdate();
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, tieID);
 
-            System.out.println("setTieElite:\n"+pst.toString());
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return SQLHandler.update(sql, map);
     }
 
     public int unsetTieElite(int tieID) {
         String sql = "UPDATE ties SET Elite=0 WHERE TieID=?";
-        int i= 0;
-        try(ConnSQL conn = new ConnSQL();
-            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
 
-            pst.setInt(1,tieID);
-            i = pst.executeUpdate();
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, tieID);
 
-            System.out.println("unsetTieElite:\n"+pst.toString());
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return i;
+        return SQLHandler.update(sql, map);
     }
 
     //public List<Tie> FindTiesByBarID(int barID) throws SQLException {
