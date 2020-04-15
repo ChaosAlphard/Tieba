@@ -1,9 +1,6 @@
 package ser;
 
-import com.common.ConnSQL;
-import com.dao.BarFollowDao;
 import com.dao.TieFavoriteDao;
-import com.model.BarFollow;
 import com.model.TieFavorite;
 import net.sf.json.JSONArray;
 
@@ -34,19 +31,11 @@ public class FavTiesServlet extends HttpServlet {
         String uid = request.getParameter("uid");
 
         if(uid!=null&&uid.matches("^[0-9]+$")){
-            try {
-                TieFavoriteDao dao = new TieFavoriteDao();
-                List<TieFavorite> lis = dao.findFavoriteTies(Integer.parseInt(uid));
-                print(lis!=null && !lis.isEmpty());
-                if(lis!=null) print("empty"+lis.isEmpty());
-                if(lis!=null && !lis.isEmpty()){
-                    JSONArray json = JSONArray.fromObject(lis);
-                    result = String.valueOf(json);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
+            TieFavoriteDao dao = new TieFavoriteDao();
+            List<TieFavorite> lis = dao.findFavoriteTies(Integer.parseInt(uid));
+            if(lis!=null && !lis.isEmpty()){
+                JSONArray json = JSONArray.fromObject(lis);
+                result = String.valueOf(json);
             }
         }
         webPrint(result,response);

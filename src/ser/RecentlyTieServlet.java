@@ -29,14 +29,8 @@ public class RecentlyTieServlet extends HttpServlet {
         String result = "err";
 
         TieDao dao = new TieDao();
-        try {
-            JSONArray json = JSONArray.fromObject(dao.findRecentlyTie());
-            result = String.valueOf(json);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnSQL.closeSQL();
-        }
+        JSONArray json = JSONArray.fromObject(dao.findRecentlyTie());
+        result = String.valueOf(json);
 
         PrintWriter out = response.getWriter();
         out.print(result);

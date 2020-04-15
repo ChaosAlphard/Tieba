@@ -1,10 +1,7 @@
 package ser;
 
-import com.common.ConnSQL;
 import com.dao.BarFollowDao;
-import com.dao.TieFavoriteDao;
 import com.model.BarFollow;
-import com.model.TieFavorite;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -14,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "FavBarsServlet", urlPatterns = {"/FavBarsServlet"})
@@ -34,21 +29,16 @@ public class FavBarsServlet extends HttpServlet {
         String result = "err";
         String uid = request.getParameter("uid");
 
-        if(uid!=null&&uid.matches("^[0-9]+$")){
-            try {
-                BarFollowDao dao = new BarFollowDao();
-                List<BarFollow> lis = dao.findFollowBars(Integer.parseInt(uid));
-                print(lis!=null && !lis.isEmpty());
-                if(lis!=null) print("empty"+lis.isEmpty());
-                if(lis!=null && !lis.isEmpty()){
-                    JSONArray json = JSONArray.fromObject(lis);
-                    result = String.valueOf(json);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
-            }
+        if(uid==null||!(uid.matches("^[0-9]+$"))) {
+            webPrint(result, response);
+            return;
+        }
+
+        BarFollowDao dao = new BarFollowDao();
+        List<BarFollow> lis = dao.findFollowBars(Integer.parseInt(uid));
+        if(lis!=null && !lis.isEmpty()){
+            JSONArray json = JSONArray.fromObject(lis);
+            result = String.valueOf(json);
         }
         webPrint(result,response);
     }
