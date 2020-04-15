@@ -19,6 +19,7 @@ public class SQLHandler {
             final ResultSet rs = pst.executeQuery();
             T t = DBTool.setData(rs, clazz);
             rs.close();
+            printSQL(pst);
 
             return t;
         } catch(SQLException e) {
@@ -37,6 +38,7 @@ public class SQLHandler {
             final ResultSet rs = pst.executeQuery();
             List<T> lis = DBTool.setDataList(rs, clazz);
             rs.close();
+            printSQL(pst);
 
             return lis;
         } catch(SQLException e) {
@@ -54,35 +56,32 @@ public class SQLHandler {
 
             final ResultSet rs = pst.executeQuery();
             if(!rs.next()) {
+                rs.close();
                 return null;
             }
 
+            T t = null;
             switch(clazz.getTypeName()) {
                 case "java.lang.String": {
-                    return (T)rs.getString(1);
+                    t =  (T)rs.getString(1);
+                    break;
                 }
                 case "int":
                 case "java.lang.Integer": {
-                    return (T)Integer.valueOf(rs.getInt(1));
+                    t =  (T)Integer.valueOf(rs.getInt(1));
+                    break;
                 }
                 default: {
                     error("无法匹配对应的Column类型: "+clazz.getTypeName());
-                    return null;
+                    break;
                 }
             }
+
+            rs.close();
+            printSQL(pst);
+            return t;
         } catch(SQLException e) {
             error("查询失败");
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private static<T> T getNewInstance(Class<T> data, Object init) {
-        // 返回新的T实例
-        try {
-            return data.newInstance();
-        } catch(InstantiationException | IllegalAccessException e) {
-            error("创建DataEntity失败, 实体类必须要有一个公共(public)的无参构造方法!");
             e.printStackTrace();
             return null;
         }
@@ -101,6 +100,7 @@ public class SQLHandler {
                 count = rs.getInt(1);
             }
             rs.close();
+            printSQL(pst);
 
             return count;
         } catch(SQLException e) {
@@ -116,6 +116,7 @@ public class SQLHandler {
 
             setParams(pst, params);
 
+            printSQL(pst);
             return pst.executeUpdate();
         } catch(SQLException e) {
             error("更新失败");
@@ -125,6 +126,9 @@ public class SQLHandler {
     }
 
     private static void setParams(PreparedStatement pst, Map<Integer, Object> params) throws SQLException {
+        if(params == null) {
+            return;
+        }
         for(Map.Entry<Integer, Object> entry : params.entrySet()) {
             int key = entry.getKey();
             Object value = entry.getValue();
@@ -139,6 +143,14 @@ public class SQLHandler {
                 error("设置查询参数失败["+key+"]: "+value);
             }
         }
+    }
+
+    private static void printSQL(PreparedStatement pst) {
+        info(pst.toString().split(": ")[1]);
+    }
+
+    private static void info(Object o) {
+        System.out.println("SQLHandler [ Info ]: "+o);
     }
 
     private static void error(Object o) {

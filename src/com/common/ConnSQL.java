@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnSQL implements AutoCloseable {
-    private static final String url="jdbc:mysql://106.13.8.174:3306/Tieba?useSSL=false&serverTimezone=GMT";
+    private static final String url="jdbc:mysql://127.0.0.1:3306/Tieba?useSSL=false&serverTimezone=GMT";
     private static final String usr="root";
-    private static final String pwd="147158zxc26795";
+    private static final String pwd="123456";
 
     private Connection connection;
 

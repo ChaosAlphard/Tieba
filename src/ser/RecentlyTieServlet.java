@@ -1,6 +1,5 @@
 package ser;
 
-import com.common.ConnSQL;
 import com.dao.TieDao;
 import com.model.Tie;
 import net.sf.json.JSONArray;
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "RecentlyTieServlet", urlPatterns = {"/RecentlyTieServlet"})
@@ -29,8 +26,12 @@ public class RecentlyTieServlet extends HttpServlet {
         String result = "err";
 
         TieDao dao = new TieDao();
-        JSONArray json = JSONArray.fromObject(dao.findRecentlyTie());
-        result = String.valueOf(json);
+        List<Tie> lis = dao.findRecentlyTie();
+
+        if(lis != null) {
+            JSONArray json = JSONArray.fromObject(lis);
+            result = String.valueOf(json);
+        }
 
         PrintWriter out = response.getWriter();
         out.print(result);
