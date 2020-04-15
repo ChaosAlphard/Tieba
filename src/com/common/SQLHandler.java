@@ -68,6 +68,32 @@ public class SQLHandler {
         }
     }
 
+    public static int update(String sql, Map<Integer, Object> params) {
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            for(Map.Entry<Integer, Object> entry : params.entrySet()) {
+                int key = entry.getKey();
+                Object value = entry.getValue();
+
+                if(value instanceof String){
+                    pst.setString(key, (String)value);
+                }
+                else if(value instanceof Integer){
+                    pst.setInt(key, (int)value);
+                }
+                else {
+                    error("设置查询更新失败["+key+"]: "+value);
+                }
+            }
+
+            return pst.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     private static void error(Object o) {
         System.out.println("SQLHandler [ Error ]: "+o);
     }
