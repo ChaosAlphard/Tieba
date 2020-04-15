@@ -11,22 +11,27 @@ public class ConnSQL implements AutoCloseable {
 
     private Connection connection;
 
-    public Connection getConn(boolean isAutoCommit) {
+    public ConnSQL() {
+        this(true);
+    }
+
+    public ConnSQL(boolean isAutoCommit) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,usr,pwd);
-            connection.setAutoCommit(isAutoCommit);
-            log("连接成功, 自动提交设为: "+isAutoCommit);
-            return connection;
+            this.connection = DriverManager.getConnection(url,usr,pwd);
+            this.connection.setAutoCommit(isAutoCommit);
+            logInfo("连接成功, 自动提交设为: "+isAutoCommit);
         } catch(ClassNotFoundException e) {
-            log("链接失败, 找不到驱动");
+            logError("链接失败, 找不到驱动");
             e.printStackTrace();
-            return null;
         } catch(SQLException e) {
-            log("链接失败, 数据库错误");
+            logError("链接失败, 数据库错误");
             e.printStackTrace();
-            return null;
         }
+    }
+
+    public Connection getConn() {
+        return this.connection;
     }
 
     @Override
@@ -35,18 +40,22 @@ public class ConnSQL implements AutoCloseable {
             try {
                 connection.close();
                 connection=null;
-                log("关闭成功");
+                logInfo("关闭成功");
             } catch(SQLException e) {
                 connection=null;
-                log("关闭失败, 关闭时出现错误, 已强制设为null");
+                logError("关闭失败, 关闭时出现错误, 已强制设为null");
                 e.printStackTrace();
             }
         } else {
-            log("关闭失败, 没有connection对象");
+            logError("关闭失败, 没有connection对象");
         }
     }
 
-    private static void log(Object o) {
-        System.out.println("[ConnSQL]: "+o);
+    private static void logInfo(Object o) {
+        System.out.println("ConnSQL[ Info ]: "+o);
+    }
+
+    private static void logError(Object o) {
+        System.out.println("ConnSQL[ Error ]: "+o);
     }
 }
