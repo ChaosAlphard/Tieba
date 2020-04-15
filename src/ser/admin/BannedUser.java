@@ -1,6 +1,5 @@
 package ser.admin;
 
-import com.common.ConnSQL;
 import com.dao.UserDao;
 import com.model.User;
 import net.sf.json.JSONArray;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "BannedUser", urlPatterns = {"/BannedUser"})
 public class BannedUser extends HttpServlet {
@@ -23,49 +21,45 @@ public class BannedUser extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        String result = "err";
         String uid = request.getParameter("userID");
         String status = request.getParameter("status");
         HttpSession session = request.getSession();
         String lv = (String)session.getAttribute("adminLV");
 
-        if(uid!=null&&uid.equals("1")){
-            result = "lock";
-        } else {
-            if(lv!=null&&lv.equals("3")){
-                if(uid!=null&&uid.matches("^[0-9]+$")){
-                    try {
-                        print(status);
-                        int id = Integer.parseInt(uid);
-                        int i=0;
-                        UserDao dao = new UserDao();
-                        switch (status) {
-                            case "0":
-                                i=dao.bannedUser(id);
-                                break;
-                            case "1":
-                                i=dao.unbannedUser(id);
-                                break;
-                            case "2":
-                                i=dao.setAsAdmin(id);
-                                break;
-                        }
-                        if(i!=0){
-                            result="suc";
-                        } else {
-                            result="dataErr";
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        ConnSQL.closeSQL();
-                    }
-                }
-            } else {
-                result = "lvErr";
-            }
+        if(uid==null||!uid.matches("^[0-9]+$")){
+            webPrint("err",response);
+            return;
+        }
+        if("1".equals(uid)) {
+            webPrint("lock", response);
+            return;
+        }
+        if(!"3".equals(lv)){
+            webPrint("lvErr", response);
+            return;
         }
 
+        print(status);
+        int id = Integer.parseInt(uid);
+        int i=0;
+        UserDao dao = new UserDao();
+        switch (status) {
+            case "0":
+                i=dao.bannedUser(id);
+                break;
+            case "1":
+                i=dao.unbannedUser(id);
+                break;
+            case "2":
+                i=dao.setAsAdmin(id);
+                break;
+        }
+        String result;
+        if(i!=0){
+            result="suc";
+        } else {
+            result="dataErr";
+        }
         webPrint(result,response);
     }
 
@@ -78,17 +72,11 @@ public class BannedUser extends HttpServlet {
 
         if(uid!=null&&uid.matches("^[0-9]+$")){
             UserDao dao = new UserDao();
-            try {
-                User u = dao.findByID(Integer.parseInt(uid));
-                if(u!=null&&u.getUID()!=0&&u.getAccount()!=null){
-                    result = String.valueOf(JSONArray.fromObject(u));
-                } else {
-                    result = "dataErr";
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
+            User u = dao.findByID(Integer.parseInt(uid));
+            if(u!=null&&u.getUID()!=0&&u.getAccount()!=null){
+                result = String.valueOf(JSONArray.fromObject(u));
+            } else {
+                result = "dataErr";
             }
         }
         webPrint(result,response);

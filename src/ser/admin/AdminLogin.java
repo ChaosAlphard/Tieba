@@ -1,6 +1,5 @@
 package ser.admin;
 
-import com.common.ConnSQL;
 import com.dao.UserDao;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "AdminLogin", urlPatterns = {"/AdminLogin"})
 public class AdminLogin extends HttpServlet {
@@ -25,21 +23,16 @@ public class AdminLogin extends HttpServlet {
 
         String account = request.getParameter("aot");
         String password = request.getParameter("pwd");
-        String[] info = new String[3];
+
         System.out.println(account);
         System.out.println(password);
 
         HttpSession session = request.getSession();
-        UserDao dao = new UserDao();
 
-        try {
-            info = dao.AdminLogin(account,password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnSQL.closeSQL();
-        }
+        UserDao dao = new UserDao();
+        String[] info = dao.AdminLogin(account,password);
         System.out.println("info:"+info[0]+"-"+info[1]+"-"+info[2]);
+
         if(info[0]!=null&&info[1]!=null&&info[2]!=null){
             if(info[2].equals("2")||info[2].equals("3")){
                 result = "suc";

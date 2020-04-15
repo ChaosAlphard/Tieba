@@ -1,6 +1,5 @@
 package ser.admin;
 
-import com.common.ConnSQL;
 import com.dao.BarDao;
 
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "CreateBar", urlPatterns = {"/CreateBar"})
 public class CreateBar extends HttpServlet {
@@ -26,22 +24,15 @@ public class CreateBar extends HttpServlet {
 
         if(name!=null&&name.length()>0&&name.length()<=12&&
           !name.matches("[^A-z0-9\u4e00-\u9fa5]")&&
-           cont!=null&&cont.length()>0&&cont.length()<=280){
-            try {
-                BarDao dao = new BarDao();
-                String fbar=dao.findByName(name);
-                if(fbar!=null&&fbar.length()>0){
-                    result="rep";
-                } else {
-                    int i=dao.createNewBar(name,cont);
-                    if(i!=0){
-                        result="suc";
-                    }
+          cont!=null&&cont.length()>0&&cont.length()<=280){
+            BarDao dao = new BarDao();
+            if(dao.isBarExist(name)){
+                result="rep";
+            } else {
+                int i=dao.createNewBar(name,cont);
+                if(i!=0){
+                    result="suc";
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
             }
         }
         webPrint(result,response);

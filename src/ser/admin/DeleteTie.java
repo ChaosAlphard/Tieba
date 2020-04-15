@@ -1,6 +1,5 @@
 package ser.admin;
 
-import com.common.ConnSQL;
 import com.dao.TieDao;
 import com.model.Tie;
 import net.sf.json.JSONArray;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "DeleteTie", urlPatterns = {"/DeleteTie"})
 public class DeleteTie extends HttpServlet {
@@ -29,21 +27,15 @@ public class DeleteTie extends HttpServlet {
         if(LV!=null&&(LV.equals("2")||LV.equals("3"))) {
             if (tieID != null && tieID.matches("^[0-9]+$")) {
                 TieDao dao = new TieDao();
-                try {
-                    int id = Integer.parseInt(tieID);
-                    Tie t = dao.FindByID(id);
-                    if (t.getTieID() != 0 && t.getTieTitle() != null) {
-                        int i = dao.deleteTie(id);
-                        if (i != 0) {
-                            result = "suc";
-                        } else {
-                            result = "dataErr";
-                        }
+                int id = Integer.parseInt(tieID);
+                Tie t = dao.FindByID(id);
+                if (t != null && t.getTieID() != 0 && t.getTieTitle() != null) {
+                    int i = dao.deleteTie(id);
+                    if (i != 0) {
+                        result = "suc";
+                    } else {
+                        result = "dataErr";
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } finally {
-                    ConnSQL.closeSQL();
                 }
             }
         } else {
@@ -65,17 +57,11 @@ public class DeleteTie extends HttpServlet {
 
         if(tieID!=null&&tieID.matches("^[0-9]+$")){
             TieDao dao = new TieDao();
-            try {
-                Tie t = dao.FindByID(Integer.parseInt(tieID));
-                if(t.getTieID()!=0&&t.getTieTitle()!=null&&t.getVisible()!=0){
-                    result = String.valueOf(JSONArray.fromObject(t));
-                } else {
-                    result = "dataErr";
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
+            Tie t = dao.FindByID(Integer.parseInt(tieID));
+            if(t!=null&&t.getTieID()!=0&&t.getTieTitle()!=null&&t.getVisible()!=0){
+                result = String.valueOf(JSONArray.fromObject(t));
+            } else {
+                result = "dataErr";
             }
         }
 

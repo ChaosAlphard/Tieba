@@ -1,6 +1,5 @@
 package ser.admin;
 
-import com.common.ConnSQL;
 import com.dao.TieDao;
 
 import javax.servlet.ServletException;
@@ -11,11 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "SetElite", urlPatterns = {"/SetElite"})
 public class SetElite extends HttpServlet {
-    private void sout(Object o){
+    private void print(Object o){
         System.out.println("ser.admin.SetElite[log]: "+o);
     }
 
@@ -31,30 +29,24 @@ public class SetElite extends HttpServlet {
 
         if(lv!=null&&(lv.equals("2")||lv.equals("3"))) {
             if (tieID != null && tieID.matches("^[0-9]+$")) {
-                try {
-                    sout("status:"+status);
-                    int id = Integer.parseInt(tieID);
-                    switch (status) {
-                        case "0":
-                            result = unsetElite(id);
-                            break;
-                        case "1":
-                            result = setElite(id);
-                            break;
-                        default:
-                            result = "err";
-                            break;
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } finally {
-                    ConnSQL.closeSQL();
+                print("status:"+status);
+                int id = Integer.parseInt(tieID);
+                switch (status) {
+                    case "0":
+                        result = unsetElite(id);
+                        break;
+                    case "1":
+                        result = setElite(id);
+                        break;
+                    default:
+                        result = "err";
+                        break;
                 }
             }
         } else {
             result = "lvErr";
         }
-        print(result, response);
+        webPrint(result, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,7 +54,7 @@ public class SetElite extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
     }
 
-    private String setElite(int tieID) throws SQLException, IOException {
+    private String setElite(int tieID) {
         TieDao dao = new TieDao();
         int i = dao.setTieElite(tieID);
         if(i!=0){
@@ -71,7 +63,7 @@ public class SetElite extends HttpServlet {
             return "dataErr";
         }
     }
-    private String unsetElite(int tieID) throws SQLException, IOException {
+    private String unsetElite(int tieID) {
         TieDao dao = new TieDao();
         int i = dao.unsetTieElite(tieID);
         if(i!=0){
@@ -81,7 +73,7 @@ public class SetElite extends HttpServlet {
         }
     }
 
-    private void print(String result,HttpServletResponse response) throws IOException {
+    private void webPrint(String result,HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
         out.print(result);
         out.flush();

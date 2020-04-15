@@ -29,7 +29,7 @@
         <div class="follow">关注贴吧</div>
     </div>
     <div class="barContent">贴吧简介:<br>${bar.barContent}</div>
-    <div class="horizon">帖子列表<a href="BarsElite?id=${bar.barID}" class="elite">精品区</a></div>
+    <div class="horizon">帖子列表<a href="BarsElite?id=${bar.barID}" class="elite" target="_blank" rel="noopener">精品区</a></div>
     <div class="barMain">
         <c:if test="${ties.size()==0}">
         <div style="font-size: 24px">还没有人在这个贴吧发帖哦</div>
@@ -72,7 +72,7 @@
 
 <div class="fa fa-arrow-circle-up toTop"></div>
 
-<%--<script src="js/customFunction.js"></script>--%>
+<%--<script src="js/readCookie.js"></script>--%>
 <%--<script src="js/logAndReg.js"></script>--%>
 <script src="js/barMain.js"></script>
 </body>
