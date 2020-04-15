@@ -11,6 +11,9 @@ public class DBTool {
     private static<T> T setEntity(ResultSet rs, Class<T> data) {
         Field[] declaredFields = data.getDeclaredFields();
         T t = getNewInstance(data);
+        if(t == null) {
+            return null;
+        }
 
         for(Field field : declaredFields) {
             // 跳过静态字段, getModifiers方法不受private访问限制
@@ -66,7 +69,7 @@ public class DBTool {
         try {
             return data.newInstance();
         } catch(InstantiationException | IllegalAccessException e) {
-            error("创建DataEntity失败");
+            error("创建DataEntity失败, 实体类必须要有一个公共(public)的无参构造方法!");
             e.printStackTrace();
             return null;
         }
