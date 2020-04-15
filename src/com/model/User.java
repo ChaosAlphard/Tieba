@@ -1,5 +1,7 @@
 package com.model;
 
+import java.util.Objects;
+
 public class User {
     public static final int BlockedUser = 0;    //封禁用户
     public static final int NormalUser = 1;     //普通用户
@@ -50,5 +52,32 @@ public class User {
 
     public void setAdminLv(int adminLv) {
         this.adminLv = adminLv;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("UID=").append(UID);
+        sb.append(", account='").append(account).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", adminLv=").append(adminLv);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o)
+            return true;
+        if(o == null || getClass() != o.getClass())
+            return false;
+        User user = (User) o;
+        return UID == user.UID && adminLv == user.adminLv && Objects.equals(account, user.account) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(UID, account, username, password, adminLv);
     }
 }

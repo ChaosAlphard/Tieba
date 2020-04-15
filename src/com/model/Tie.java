@@ -1,5 +1,7 @@
 package com.model;
 
+import java.util.Objects;
+
 public class Tie {
     private int tieID;
     private int barID;
@@ -90,5 +92,37 @@ public class Tie {
 
     public void setElite(int elite) {
         this.elite = elite;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Tie{");
+        sb.append("tieID=").append(tieID);
+        sb.append(", barID=").append(barID);
+        sb.append(", tieTitle='").append(tieTitle).append('\'');
+        sb.append(", tieMain='").append(tieMain).append('\'');
+        sb.append(", tieUser='").append(tieUser).append('\'');
+        sb.append(", tieUserID=").append(tieUserID);
+        sb.append(", postTime='").append(postTime).append('\'');
+        sb.append(", updateTime='").append(updateTime).append('\'');
+        sb.append(", visible=").append(visible);
+        sb.append(", elite=").append(elite);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o)
+            return true;
+        if(o == null || getClass() != o.getClass())
+            return false;
+        Tie tie = (Tie) o;
+        return tieID == tie.tieID && barID == tie.barID && tieUserID == tie.tieUserID && visible == tie.visible && elite == tie.elite && Objects.equals(tieTitle, tie.tieTitle) && Objects.equals(tieMain, tie.tieMain) && Objects.equals(tieUser, tie.tieUser) && Objects.equals(postTime, tie.postTime) && Objects.equals(updateTime, tie.updateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tieID, barID, tieTitle, tieMain, tieUser, tieUserID, postTime, updateTime, visible, elite);
     }
 }

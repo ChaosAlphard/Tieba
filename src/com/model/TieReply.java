@@ -1,5 +1,7 @@
 package com.model;
 
+import java.util.Objects;
+
 public class TieReply {
     private int tieID;
     private int floor;
@@ -63,5 +65,34 @@ public class TieReply {
 
     public void setVisible(int visible) {
         this.visible = visible;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TieReply{");
+        sb.append("tieID=").append(tieID);
+        sb.append(", floor=").append(floor);
+        sb.append(", reply='").append(reply).append('\'');
+        sb.append(", reUser='").append(reUser).append('\'');
+        sb.append(", reUserID=").append(reUserID);
+        sb.append(", reTime='").append(reTime).append('\'');
+        sb.append(", visible=").append(visible);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o)
+            return true;
+        if(o == null || getClass() != o.getClass())
+            return false;
+        TieReply tieReply = (TieReply) o;
+        return tieID == tieReply.tieID && floor == tieReply.floor && reUserID == tieReply.reUserID && visible == tieReply.visible && Objects.equals(reply, tieReply.reply) && Objects.equals(reUser, tieReply.reUser) && Objects.equals(reTime, tieReply.reTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tieID, floor, reply, reUser, reUserID, reTime, visible);
     }
 }

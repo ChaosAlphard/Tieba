@@ -1,5 +1,7 @@
 package com.model;
 
+import java.util.Objects;
+
 public class Bar {
     private int barID;
     private String barName;
@@ -36,5 +38,31 @@ public class Bar {
 
     public void setVisible(int visible) {
         this.visible = visible;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Bar{");
+        sb.append("barID=").append(barID);
+        sb.append(", barName='").append(barName).append('\'');
+        sb.append(", barContent='").append(barContent).append('\'');
+        sb.append(", visible=").append(visible);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o)
+            return true;
+        if(o == null || getClass() != o.getClass())
+            return false;
+        Bar bar = (Bar) o;
+        return barID == bar.barID && visible == bar.visible && Objects.equals(barName, bar.barName) && Objects.equals(barContent, bar.barContent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(barID, barName, barContent, visible);
     }
 }
