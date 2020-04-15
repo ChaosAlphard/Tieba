@@ -88,7 +88,7 @@ sub.onclick=()=>{
                 alert("上传成功\n刷新浏览器缓存以查看效果");
                 location.reload();
             } else {
-                alert("上传失败,服务器找不到路径\nV:/RNC/DEPLOY/Tieba/web/img/avatar/")
+                alert("上传失败,服务器找不到路径\n~/RNC/DEPLOY/Tieba/web/img/avatar/")
             }
         }
     }

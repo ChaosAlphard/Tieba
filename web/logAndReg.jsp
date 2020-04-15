@@ -11,19 +11,19 @@
         <div class="logform">
             <div class="usrdiv">
                 <span class="fa fa-user"></span>
-                <input type="text" name="aot" class="logusr">
+                <input type="text" name="aot" class="logusr" value="wan23333" autofocus required>
             </div>
             <div class="pwddiv">
                 <span class="fa fa-lock"></span>
-                <input type="password" name="pwd" class="logpwd">
+                <input type="password" name="pwd" class="logpwd" value="123456" required>
             </div>
             <div class="logsubdiv">
                 <button type="button" class="fa fa-check logsub">登录</button>
             </div>
             <div class="logmpt">7天内自动登录</div>
             <div>
-                <input id="fuid" type="text" name="uid" style="visibility: hidden">
-                <input id="fusr" type="text" name="usr" style="visibility: hidden">
+                <input id="fuid" type="hidden" name="uid">
+                <input id="fusr" type="hidden" name="usr">
             </div>
         </div>
     </form>
