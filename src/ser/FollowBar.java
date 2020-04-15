@@ -1,8 +1,6 @@
 package ser;
 
-import com.common.ConnSQL;
 import com.dao.BarFollowDao;
-import com.model.BarFollow;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "FollowBar", urlPatterns = {"/FollowBar"})
 public class FollowBar extends HttpServlet {
@@ -30,29 +27,24 @@ public class FollowBar extends HttpServlet {
 
         if(uid!=null&&uid.matches("^[0-9]+$")&&
         barID!=null&&barID.matches("^[0-9]+$")&&barName!=null){
-            try {
-                print("follow: "+follow);
-                int id = Integer.parseInt(uid);
-                int bid= Integer.parseInt(barID);
-                BarFollowDao dao = new BarFollowDao();
-                int i=0;
-                switch(follow) {
-                    case "0":
-                        i=dao.followBar(id,bid,barName);
-                        break;
-                    case "1":
-                        i=dao.unfollowBar(id,bid);
-                        break;
-                }
-                if(i!=0){
-                    result = "suc";
-                } else {
-                    result = "dataErr";
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
+
+            print("follow: "+follow);
+            int id = Integer.parseInt(uid);
+            int bid= Integer.parseInt(barID);
+            BarFollowDao dao = new BarFollowDao();
+            int i=0;
+            switch(follow) {
+                case "0":
+                    i=dao.followBar(id,bid,barName);
+                    break;
+                case "1":
+                    i=dao.unfollowBar(id,bid);
+                    break;
+            }
+            if(i!=0){
+                result = "suc";
+            } else {
+                result = "dataErr";
             }
         }
         webPrint(result,response);
@@ -67,21 +59,15 @@ public class FollowBar extends HttpServlet {
         String barID = request.getParameter("barID");
 
         if(uid!=null&&uid.matches("^[0-9]+$")&&
-                barID!=null&&barID.matches("^[0-9]+$")){
-            try {
-                int id = Integer.parseInt(uid);
-                int bid= Integer.parseInt(barID);
-                BarFollowDao dao = new BarFollowDao();
-                BarFollow bf = dao.isFollowBar(id,bid);
-                if(bf.getBarID()!=0&&bf.getBarName()!=null){
-                    result = "followed";
-                } else {
-                    result = "unfollow";
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
+          barID!=null&&barID.matches("^[0-9]+$")){
+            int id = Integer.parseInt(uid);
+            int bid= Integer.parseInt(barID);
+            BarFollowDao dao = new BarFollowDao();
+
+            if(dao.isFollowBar(id,bid)){
+                result = "followed";
+            } else {
+                result = "unfollow";
             }
         }
         webPrint(result,response);

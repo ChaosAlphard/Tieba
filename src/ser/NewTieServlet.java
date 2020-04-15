@@ -1,8 +1,6 @@
 package ser;
 
-import com.common.ConnSQL;
 import com.dao.NewTie;
-import com.dao.UserDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
-import java.sql.SQLException;
 
 @WebServlet(name = "NewTieServlet", urlPatterns = {"/NewTieServlet"})
 public class NewTieServlet extends HttpServlet {
@@ -42,23 +38,10 @@ public class NewTieServlet extends HttpServlet {
         &&barID.matches("^[0-9]+$")&&uid.matches("^[0-9]+$")&&
         title.length()>0&&title.length()<21&&main.length()>0&&main.length()<1000){
 
-            UserDao ud = new UserDao();
             NewTie dao = new NewTie();
-            try {
-                int id = Integer.parseInt(uid);
-                if(ud.findByID(id).getAdminLv()!=0){
-                    int i=dao.CreateNewTie(Integer.parseInt(barID),title,main,usr,id);
-                    if(i!=0){
-                        result = "suc";
-                    }
-                } else {
-                    result = "lvErr";
-                }
-            } catch (SQLException e) {
-                result = "daoErr";
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
+            int i=dao.CreateNewTie(Integer.parseInt(barID),title,main,usr,Integer.parseInt(uid));
+            if(i!=0){
+                result = "suc";
             }
         } else {
             result = "dataErr";
