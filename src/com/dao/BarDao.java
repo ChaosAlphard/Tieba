@@ -32,9 +32,9 @@ public class BarDao {
         Map<Integer, Object> map = new HashMap<>();
         map.put(1, barName);
 
-        Bar bar = SQLHandler.querySingle(sql, map, Bar.class);
+        String res = SQLHandler.queryColumn(sql, map, String.class);
 
-        return bar != null;
+        return (res != null && !res.isEmpty());
     }
 
     public int createNewBar(String barName,String barContent) {
