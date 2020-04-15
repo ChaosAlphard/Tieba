@@ -30,10 +30,12 @@ public class DBTool {
                 else {
                     error("匹配不到对应类型: "+field.getType()+" 字段: "+field.getName());
                 }
-            } catch(IllegalAccessException | SQLException e) {
+            } catch(IllegalAccessException e) {
                 error("ResultSet映射到DataEntity失败\n类型: "
                         +field.getType()+" 字段: "+field.getName());
                 e.printStackTrace();
+            } catch(SQLException e){
+                error("ResultSet中找不到对应的字段: "+field.getName());
             } finally {
                 field.setAccessible(flag);
             }
