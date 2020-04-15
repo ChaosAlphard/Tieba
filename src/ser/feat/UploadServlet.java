@@ -14,7 +14,6 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        String uploadFlag="err";
 
         /* 获取项目路径 */
         /*!因为服务器部署策略不同,Eclipse和IDEA可能返回不同结果!*/
@@ -49,6 +48,7 @@ public class UploadServlet extends HttpServlet {
 
         /* 生成图像文件 */
         BASE64Decoder decoder = new BASE64Decoder();
+        String uploadFlag;
         try {
             byte[] b = decoder.decodeBuffer(img);
             for(int i=0;i<b.length;i++){

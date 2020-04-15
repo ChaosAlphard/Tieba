@@ -49,6 +49,7 @@ public class NewTie {
                 error("获取帖子楼层信息失败");
                 return 0;
             }
+            sqlInfo(step1PST);
             step1PST.close();
             // End
 
@@ -71,6 +72,7 @@ public class NewTie {
                 connection.rollback();
                 return -1;
             }
+            sqlInfo(step2PST);
             // End
 
             // Step3 更新帖子的回复时间
@@ -80,12 +82,14 @@ public class NewTie {
             step3PST.setString(1,time);
             step3PST.setInt(2,tieID);
 
-            int step3Count = step2PST.executeUpdate();
+            int step3Count = step3PST.executeUpdate();
             if(step3Count < 1) {
                 error("更新失败");
                 connection.rollback();
                 return -1;
             }
+            sqlInfo(step3PST);
+            // End
 
             connection.commit();
             step2PST.close();
@@ -105,6 +109,10 @@ public class NewTie {
         } finally {
             conn.close();
         }
+    }
+
+    private static void sqlInfo(PreparedStatement pst) {
+        System.out.println("NewTie [ SQL ]: "+pst.toString().split(": ")[1]);
     }
 
     private static void error(Object o) {

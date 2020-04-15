@@ -87,29 +87,6 @@ public class SQLHandler {
         }
     }
 
-    public static int queryCount(String sql, Map<Integer, Object> params) {
-        try(ConnSQL conn = new ConnSQL(true);
-            PreparedStatement pst = conn.getConn().prepareStatement(sql)) {
-
-            setParams(pst, params);
-
-            final ResultSet rs = pst.executeQuery();
-
-            int count = 0;
-            if(rs.next()) {
-                count = rs.getInt(1);
-            }
-            rs.close();
-            printSQL(pst);
-
-            return count;
-        } catch(SQLException e) {
-            error("统计失败");
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
     public static int update(String sql, Map<Integer, Object> params) {
         try(ConnSQL conn = new ConnSQL(true);
             PreparedStatement pst = conn.getConn().prepareStatement(sql)) {
