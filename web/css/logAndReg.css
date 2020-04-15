@@ -33,7 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: hsla(0, 0%, 0%, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 14;
 }
 
@@ -75,7 +75,7 @@
 /* 登录相关 */
 /* 登录窗体 */
 .logdiv{
-    background: url("../img/bg-blur.jpg") fixed top center / cover;
+    background: url("https://s2.ax1x.com/2020/03/05/3TiWUx.jpg") fixed top center / cover;
     width: 400px;
     height:400px;
     border-radius: 20px;
@@ -113,7 +113,7 @@
 
 /* 注册相关 */
 .regdiv{
-    background: url("../img/bg-blur.jpg") fixed top center / cover;
+    background: url("https://s2.ax1x.com/2020/03/05/3TiWUx.jpg") fixed top center / cover;
     width: 800px;
     height:600px;
     border-radius: 20px;
@@ -160,19 +160,22 @@
     background-color: transparent;
 }
 .captcha{
-    font: normal normal normal 16px/1 "consolas";
+    /*font: normal normal normal 16px/1 "consolas";*/
     /*font-family: "consolas";*/
-    font-size: inherit;
-    line-height: inherit;
+    /*font-size: inherit;*/
+    /*line-height: inherit;*/
+    position: absolute;
+    top: -5px; right: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
 }
 .captchacover{
-    position: absolute;
+    position: relative;
     width: 280px;
     height: 32px;
     z-index: 16;
+    margin-right: 8px;
 }
 .regsub{
     font-size: 20px;

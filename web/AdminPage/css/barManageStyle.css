@@ -1,13 +1,13 @@
 body{
     margin: 0;
-    background: url("../img/bg.jpg") fixed center center / cover;
+    background: url("https://s2.ax1x.com/2020/03/05/3TFFZn.jpg") fixed center center / cover;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .base{
-    background: url("../img/bg-blur-cover.jpg") fixed center center / cover;
+    background: url("https://s2.ax1x.com/2020/03/05/3TFAI0.jpg") fixed center center / cover;
     margin-top: -80px;
     width: 1000px;
     box-shadow: 0 0 20px 12px #F0B478 inset;
@@ -42,6 +42,7 @@ body{
     border-bottom: 2px solid #000000;
     width: 80%;
     font-size: 24px;
+    outline: none;
 }
 .content>.inp>.editable{
     background-color: transparent;
@@ -51,6 +52,7 @@ body{
     overflow: auto;
     font-family: "Microsoft YaHei UI", monospace;
     font-size: 18px;
+    outline: none;
 }
 
 .cre{

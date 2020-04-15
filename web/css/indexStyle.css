@@ -1,6 +1,12 @@
+/*
+img/bg            = https://s2.ax1x.com/2020/03/05/3TiRV1.jpg
+img/bg-blur       = https://s2.ax1x.com/2020/03/05/3TiWUx.jpg
+img/bg-blur-cover = https://s2.ax1x.com/2020/03/05/3TigbR.jpg
+*/
+
 body{
     margin: 0;
-    background: #9370DD url("../img/bg.jpg") fixed top center / cover;
+    background: #291D43 url("https://s2.ax1x.com/2020/03/05/3TiRV1.jpg") fixed top center / cover;
 }
 
 /* loading page */
@@ -14,7 +20,7 @@ body{
     width: 100%;
     height: 100vh;
     flex-direction: column;
-    background: url("../img/bg-blur.jpg") fixed top center / cover;
+    background: #291D43 url("https://s2.ax1x.com/2020/03/05/3TiWUx.jpg") fixed top center / cover;
     transition: opacity 800ms ease-out;
     z-index: 15;
 }
@@ -42,7 +48,7 @@ body{
     border-bottom-color: #4C8BF5;
     border-radius: 50%;
     transform-origin: center center;
-    animation: rot 3s ease-in-out infinite;
+    animation: rot 1s linear infinite;
 }
 
 .support{
@@ -62,14 +68,11 @@ body{
 }
 
 @keyframes rot {
-    0%,5%{
+    0%{
         transform: rotateZ(0deg);
     }
-    45%,55%{
-        transform: rotateZ(180deg);
-    }
-    95%,100%{
-        transform: rotateZ(360deg);
+    100%{
+        transform: rotateZ(359deg);
     }
 }
 
@@ -80,7 +83,7 @@ body{
     width: 1200px;
     border-radius: 36px;
     box-shadow: 0 0 5px 5px #673AB7;
-    background: url("../img/bg-blur.jpg") fixed top center / cover;
+    background: url("https://s2.ax1x.com/2020/03/05/3TiWUx.jpg") fixed top center / cover;
 }
 
 /* 左侧内容 */
