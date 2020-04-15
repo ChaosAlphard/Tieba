@@ -1,8 +1,6 @@
 package ser;
 
-import com.common.ConnSQL;
 import com.dao.TieFavoriteDao;
-import com.model.TieFavorite;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet(name = "FavoriteTie", urlPatterns = {"/FavoriteTie"})
 public class FavoriteTie extends HttpServlet {
@@ -29,30 +26,25 @@ public class FavoriteTie extends HttpServlet {
         String favorite = request.getParameter("favorite");
 
         if(uid!=null&&uid.matches("^[0-9]+$")&&
-                tieID!=null&&tieID.matches("^[0-9]+$")&&tieTitle!=null){
-            try {
-                print("fav: "+favorite);
-                int id = Integer.parseInt(uid);
-                int tid= Integer.parseInt(tieID);
-                TieFavoriteDao dao = new TieFavoriteDao();
-                int i=0;
-                switch(favorite) {
-                    case "0":
-                        i=dao.favoriteTie(id,tid,tieTitle);
-                        break;
-                    case "1":
-                        i=dao.unfavoriteTie(id,tid);
-                        break;
-                }
-                if(i!=0){
-                    result="suc";
-                } else {
-                    result="dataErr";
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
+        tieID!=null&&tieID.matches("^[0-9]+$")&&tieTitle!=null){
+
+            print("fav: "+favorite);
+            int id = Integer.parseInt(uid);
+            int tid= Integer.parseInt(tieID);
+            TieFavoriteDao dao = new TieFavoriteDao();
+            int i=0;
+            switch(favorite) {
+                case "0":
+                    i=dao.favoriteTie(id,tid,tieTitle);
+                    break;
+                case "1":
+                    i=dao.unfavoriteTie(id,tid);
+                    break;
+            }
+            if(i!=0){
+                result="suc";
+            } else {
+                result="dataErr";
             }
         }
         webPrint(result,response);
@@ -67,21 +59,14 @@ public class FavoriteTie extends HttpServlet {
         String tieID = request.getParameter("tieID");
 
         if(uid!=null&&uid.matches("^[0-9]+$")&&
-           tieID!=null&&tieID.matches("^[0-9]+$")){
-            try {
-                int id = Integer.parseInt(uid);
-                int tid= Integer.parseInt(tieID);
-                TieFavoriteDao dao = new TieFavoriteDao();
-                TieFavorite tf = dao.isFavoriteTie(id,tid);
-                if(tf.getTieID()!=0&&tf.getTieTitle()!=null){
-                    result="favorited";
-                } else {
-                    result="unfavorite";
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnSQL.closeSQL();
+          tieID!=null&&tieID.matches("^[0-9]+$")){
+            int id = Integer.parseInt(uid);
+            int tid= Integer.parseInt(tieID);
+            TieFavoriteDao dao = new TieFavoriteDao();
+            if(dao.isFavoriteTie(id,tid)){
+                result="favorited";
+            } else {
+                result="unfavorite";
             }
         }
         webPrint(result,response);
