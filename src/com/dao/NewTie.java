@@ -29,14 +29,14 @@ public class NewTie {
         }
     }
 
-    public void closeNaSQL(){
+    public void closeSQL(){
         try {
             naConn.close();
+            naConn=null;
             System.out.println("NewTie.closeSQL[success]");
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
             naConn=null;
+            e.printStackTrace();
         }
     }
 

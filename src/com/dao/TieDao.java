@@ -2,6 +2,7 @@ package com.dao;
 
 import com.common.ConnSQL;
 import com.model.Tie;
+import com.tools.DBTool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,169 +12,186 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TieDao {
-    private Connection conn;
-    public TieDao(){
-        conn = ConnSQL.getConn();
-    }
-
-    private void setTie(Tie t, ResultSet rs) throws SQLException {
-        while(rs.next()){
-            t.setTieID(rs.getInt("TieID"));
-            t.setBarID(rs.getInt("BarID"));
-            t.setTieTitle(rs.getString("TieTitle"));
-            t.setTieMain(rs.getString("TieMain"));
-            t.setTieUser(rs.getString("TieUser"));
-            t.setTieUserID(rs.getInt("TieUserID"));
-
-            //getString获取时间后面会多出".0"
-            //xxxx-xx-xx xx:xx:xx.0去掉".0"
-            String pt = rs.getString("PostTime");
-            t.setPostTime(pt.substring(0,pt.indexOf(".")));
-
-            String ut = rs.getString("UpdateTime");
-            t.setUpdateTime(ut.substring(0,ut.indexOf(".")));
-
-            t.setVisible(rs.getInt("Visible"));
-            t.setElite(rs.getInt("Elite"));
-        }
-    }
-    private void setTieList(List<Tie> lis, ResultSet rs) throws SQLException {
-        while(rs.next()){
-            Tie t = new Tie();
-            t.setTieID(rs.getInt("TieID"));
-            t.setBarID(rs.getInt("BarID"));
-            t.setTieTitle(rs.getString("TieTitle"));
-            t.setTieMain(rs.getString("TieMain"));
-            t.setTieUser(rs.getString("TieUser"));
-            t.setTieUserID(rs.getInt("TieUserID"));
-
-            String pt = rs.getString("PostTime");
-            t.setPostTime(pt.substring(0,pt.indexOf(".")));
-
-            String ut = rs.getString("UpdateTime");
-            t.setUpdateTime(ut.substring(0,ut.indexOf(".")));
-
-            t.setVisible(rs.getInt("Visible"));
-            t.setElite(rs.getInt("Elite"));
-            lis.add(t);
-        }
-    }
-
-    public Tie FindByID(int tieID) throws SQLException {
+    public Tie FindByID(int tieID) {
         String sql = "SELECT * FROM ties WHERE TieID=?";
-        Tie t = new Tie();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,tieID);
-        ResultSet rs = pst.executeQuery();
-        setTie(t,rs);
-        rs.close();
-        pst.close();
-        return t;
+        Tie tie = null;
+
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+            pst.setInt(1,tieID);
+            final ResultSet rs = pst.executeQuery();
+
+            tie = DBTool.setData(rs, Tie.class);
+
+            rs.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return tie;
     }
 
-    public List<Tie> FindByBarID(int barID) throws SQLException {
+    public List<Tie> FindByBarID(int barID) {
         String sql = "SELECT * FROM ties WHERE BarID=? AND Visible=1 ORDER BY UpdateTime DESC";
         List<Tie> lis = new ArrayList<>();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,barID);
-        ResultSet rs = pst.executeQuery();
-        setTieList(lis,rs);
-        System.out.println("TieDao: FindTiesByBarID>>>>\n"+pst.toString());
-        rs.close();
-        pst.close();
+
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+            pst.setInt(1,barID);
+            final ResultSet rs = pst.executeQuery();
+
+            lis = DBTool.setDataList(rs,Tie.class);
+
+            System.out.println("TieDao: FindTiesByBarID>>>>\n"+pst.toString());
+            rs.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return lis;
     }
 
-    public List<Tie> findEliteByBarID(int barID) throws SQLException {
+    public List<Tie> findEliteByBarID(int barID) {
         String sql = "SELECT * FROM ties WHERE Elite=1 AND BarID=? AND Visible=1 ORDER BY UpdateTime DESC";
         List<Tie> lis = new ArrayList<>();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,barID);
-        ResultSet rs = pst.executeQuery();
-        setTieList(lis,rs);
-        System.out.println("TieDao: findEliteByBarID>>>>\n"+pst.toString());
-        rs.close();
-        pst.close();
+
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            pst.setInt(1,barID);
+            final ResultSet rs = pst.executeQuery();
+
+            lis = DBTool.setDataList(rs, Tie.class);
+
+            System.out.println("TieDao: findEliteByBarID>>>>\n"+pst.toString());
+            rs.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return lis;
     }
 
-    public List<Tie> findDeletedTie(String tieUser) throws SQLException {
+    public List<Tie> findDeletedTie(String tieUser) {
         String sql = "SELECT * FROM ties WHERE Visible=0 AND TieUser=? ORDER BY PostTime DESC";
         List<Tie> lis = new ArrayList<>();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1,tieUser);
-        ResultSet rs = pst.executeQuery();
-        setTieList(lis,rs);
-        System.out.println("TieDao: findDeletedTie>>>>\n"+pst.toString());
-        rs.close();
-        pst.close();
+
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            pst.setString(1,tieUser);
+            final ResultSet rs = pst.executeQuery();
+
+            lis = DBTool.setDataList(rs, Tie.class);
+
+            System.out.println("TieDao: findDeletedTie>>>>\n"+pst.toString());
+            rs.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
         return lis;
     }
 
-    public List<Tie> FindByPage(int barID, int pageStart, int pageAmount) throws SQLException {
+    public List<Tie> FindByPage(int barID, int pageStart, int pageAmount) {
         String sql = "SELECT * from ties WHERE BarID=? AND TieID>=? LIMIT ?";
         List<Tie> lis = new ArrayList<>();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,barID);
-        pst.setInt(2,(pageStart-1)*pageAmount+1);
-        pst.setInt(3,pageAmount);
-        ResultSet rs = pst.executeQuery();
-        setTieList(lis,rs);
-        System.out.println("TieDao: FindByPage>>>>\n"+pst.toString());
-        rs.close();
-        pst.close();
+
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            pst.setInt(1,barID);
+            pst.setInt(2,(pageStart-1)*pageAmount+1);
+            pst.setInt(3,pageAmount);
+            final ResultSet rs = pst.executeQuery();
+
+            lis = DBTool.setDataList(rs, Tie.class);
+
+            System.out.println("TieDao: FindByPage>>>>\n"+pst.toString());
+            rs.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
         return lis;
     }
 
-    public List<Tie> findRecentlyTie() throws SQLException {
+    public List<Tie> findRecentlyTie() {
         String sql = "SELECT * FROM ties WHERE Visible=1 ORDER BY UpdateTime DESC LIMIT 10";
         List<Tie> lis = new ArrayList<>();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-        setTieList(lis,rs);
-        System.out.println("TieDao: recentlyTie>>>>\n"+pst.toString());
-        rs.close();
-        pst.close();
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            final ResultSet rs = pst.executeQuery();
+
+            lis = DBTool.setDataList(rs, Tie.class);
+
+            System.out.println("TieDao: recentlyTie>>>>\n"+pst.toString());
+            rs.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return lis;
     }
 
-    public int deleteTie(int tieID) throws SQLException {
+    public int deleteTie(int tieID) {
         String sql = "UPDATE ties SET Visible=0 WHERE TieID=?";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,tieID);
-        int i=pst.executeUpdate();
-        System.out.println("deleteTie:\n"+pst.toString());
-        pst.close();
+        int i= 0;
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            pst.setInt(1,tieID);
+            i = pst.executeUpdate();
+
+            System.out.println("deleteTie:\n"+pst.toString());
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return i;
     }
 
-    public int restoreTie(int tieID) throws SQLException {
+    public int restoreTie(int tieID) {
         String sql = "UPDATE ties SET Visible=1 WHERE TieID=?";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,tieID);
-        int i=pst.executeUpdate();
-        System.out.println("restoreTie:\n"+pst.toString());
-        pst.close();
+        int i= 0;
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            pst.setInt(1,tieID);
+            i = pst.executeUpdate();
+
+            System.out.println("restoreTie:\n"+pst.toString());
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return i;
     }
 
-    public int setTieElite(int tieID) throws SQLException {
+    public int setTieElite(int tieID) {
         String sql = "UPDATE ties SET Elite=1 WHERE TieID=?";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,tieID);
-        int i=pst.executeUpdate();
-        System.out.println("setTieElite:\n"+pst.toString());
-        pst.close();
+        int i= 0;
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            pst.setInt(1,tieID);
+            i = pst.executeUpdate();
+
+            System.out.println("setTieElite:\n"+pst.toString());
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return i;
     }
 
-    public int unsetTieElite(int tieID) throws SQLException {
+    public int unsetTieElite(int tieID) {
         String sql = "UPDATE ties SET Elite=0 WHERE TieID=?";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,tieID);
-        int i=pst.executeUpdate();
-        System.out.println("unsetTieElite:\n"+pst.toString());
-        pst.close();
+        int i= 0;
+        try(ConnSQL conn = new ConnSQL();
+            PreparedStatement pst = conn.getConn(true).prepareStatement(sql)) {
+
+            pst.setInt(1,tieID);
+            i = pst.executeUpdate();
+
+            System.out.println("unsetTieElite:\n"+pst.toString());
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return i;
     }
 
