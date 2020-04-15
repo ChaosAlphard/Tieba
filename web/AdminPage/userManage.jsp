@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<script src="../js/customFunction.js"></script>
+<script src="../js/readCookie.js"></script>
 <script src="js/userManageScript.js"></script>
 </body>
 </html>

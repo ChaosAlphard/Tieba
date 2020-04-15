@@ -11,7 +11,7 @@
     <title>AdminLogin</title>
     <link rel="stylesheet" href="../plugins/fontawesome.css">
     <link rel="stylesheet" href="css/loginStyle.css">
-    <script src="../js/customFunction.js"></script>
+    <script src="../js/readCookie.js"></script>
 </head>
 <body>
 <div class="base">

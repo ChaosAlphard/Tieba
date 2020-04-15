@@ -45,6 +45,6 @@
 </div>
 </body>
 
-<script src="../js/customFunction.js"></script>
+<script src="../js/readCookie.js"></script>
 <script src="js/tieManageScript.js"></script>
 </html>

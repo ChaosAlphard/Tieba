@@ -44,8 +44,7 @@
                 <span>确认密码:</span><input type="password" class="ipts"><label class="tips">确认密码</label>
             </div>
             <div class="captdiv">
-                <span class="captcha"></span>
-                <div class="captchacover"></div>
+                <div class="captchacover"><canvas class="captcha"></canvas></div>
                 <input type="text" class="ipts"><label class="tips">输入验证码</label>
             </div>
             <div class="regsubdiv">
@@ -55,7 +54,7 @@
         </div>
     </div>
 </div>
-<script src="js/customFunction.js"></script>
+<script src="js/readCookie.js"></script>
 <script src="js/autoLogin.js"></script>
 <script>
     const uid = "${sessionScope.uid}";

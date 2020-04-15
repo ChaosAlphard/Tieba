@@ -37,7 +37,7 @@
 
 <a href="/AdminLogout" class="exit fa fa-sign-out"></a>
 
-<script src="../js/customFunction.js"></script>
+<script src="../js/readCookie.js"></script>
 <script src="js/manageScript.js"></script>
 </body>
 </html>

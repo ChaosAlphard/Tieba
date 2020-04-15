@@ -43,7 +43,7 @@
     const uid = "${sessionScope.uid}";
     const usr = "${sessionScope.usr}";
 </script>
-<script src="js/customFunction.js"></script>
+<script src="./js/readCookie.js"></script>
 <script src="./plugins/cropper.js"></script>
 <script src="./js/myInfoMain.js"></script>
 </body>

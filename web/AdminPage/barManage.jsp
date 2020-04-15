@@ -34,7 +34,7 @@
     </div>
 </div>
 
-<script src="../js/customFunction.js"></script>
+<script src="../js/readCookie.js"></script>
 <script src="js/barManageScript.js"></script>
 </body>
 </html>
