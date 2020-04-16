@@ -74,10 +74,10 @@ follow.onclick=()=>{
                     isFollow=0;
                 }
             } else if(res==="dataErr"){
-                alert("数据异常");
+                alert("身份认证失败");
                 location.reload();
             } else {
-                alert("请登录后再试");
+                alert("数据异常");
             }
         }
     });
@@ -156,9 +156,9 @@ tieSubmit.onclick=()=>{
                 const res = xhr.responseText;
                 if(res==="suc"){
                     alert("发帖成功");
-                    location.reload(true);
+                    location.reload();
                 } else if(res==="dataErr"){
-                    alert("数据异常");
+                    alert("身份认证失败, 刷新网页后再试");
                 } else if(res==="daoErr"){
                     alert("发帖失败, 服务器繁忙");
                 } else {

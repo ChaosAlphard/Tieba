@@ -31,8 +31,8 @@ const favBar = sel(".favbar");
             await getRecentlyTie();
         }
     } catch(e) {
-        sel(".lod").innerHTML="数据获取失败";
-        console.log(e);
+        sel(".lod").innerHTML=e[0];
+        console.warn(e[1]);
     } finally {
         hiddenLoading();
     }
@@ -49,7 +49,7 @@ function hiddenLoading() {
 }
 
 function autoLogin() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         ajax({
             isPost:false,
             url:"LoginServlet",
@@ -57,9 +57,10 @@ function autoLogin() {
             success:(xhr)=>{
                 console.log(xhr.responseText);
                 resolve(xhr.responseText);
-                // if(xhr.responseText==="reload") {
-                //     location.reload();
-                // }
+            },
+            error:(xhr)=>{
+                console.error(xhr.status);
+                reject(["网络异常",xhr])
             }
         });
     });
@@ -72,6 +73,10 @@ function getRecentlyTie() {
             url:"RecentlyTieServlet",
             data:{"key":"value"},
             success:(xhr)=>{
+                if(xhr.responseText === "err"){
+                    reject(["获取帖子数据失败", xhr]);
+                    return;
+                }
                 try {
                     const json = JSON.parse(xhr.responseText);
                     for (const tie of json) {
@@ -99,8 +104,12 @@ function getRecentlyTie() {
                     }
                     resolve();
                 } catch(e) {
-                    reject(e);
+                    reject(["解析帖子数据失败", e]);
                 }
+            },
+            error:xhr=>{
+                console.error("getRecentlyTie",xhr);
+                reject(["网络异常",xhr])
             }
         });
     })
@@ -116,6 +125,10 @@ function getFavBars() {
             },
             showData:true,
             success:(xhr)=>{
+                if(xhr.responseText === "err"){
+                    reject(["获取关注贴吧数据失败", xhr]);
+                    return;
+                }
                 try {
                     const json = JSON.parse(xhr.responseText);
                     for (const bar of json) {
@@ -129,8 +142,12 @@ function getFavBars() {
                     }
                     resolve();
                 } catch(e) {
-                    reject(e);
+                    reject(["解析帖吧数据失败",xhr]);
                 }
+            },
+            error:(xhr)=>{
+                console.error("getFavBars",xhr);
+                reject(["网络异常",xhr]);
             }
         })
     })

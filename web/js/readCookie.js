@@ -69,12 +69,17 @@ function ajax({
     url="url",
     data={"key":"value"},
     showData=false,
-    success=(xhr)=>{console.log(xhr.responseText)}
+    waitTime=5000,
+    success=(xhr)=>{console.log(xhr.responseText)},
+    error=(err)=>{console.error(err.status)},
+    timeout=(xhr)=>{console.warn(xhr)}
 }={}) {
-    let xhr=null;
-    if(window.XMLHttpRequest){
-        xhr = new XMLHttpRequest();
+    if(!window.XMLHttpRequest){
+        alert("你的浏览器不支持XMLHttpRequest");
+        return;
     }
+
+    let xhr=new XMLHttpRequest();
 
     let params=[];
     for(const key in data){
@@ -90,6 +95,7 @@ function ajax({
         console.log("postData: "+postData);
     }
 
+    xhr.timeout = waitTime;
     if(isPost){
         xhr.open("post",url,true);
         xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -99,9 +105,19 @@ function ajax({
         xhr.send(null);
     }
 
+    // xhr.readyState为3 时, 调用onprogress()
+    // hxr.readyState为4 时, 调用onload()
     xhr.onreadystatechange=()=>{
         if(xhr.readyState===4&&xhr.status===200){
             success(xhr);
+        } else if(xhr.readyState===4&&xhr.status>=500) {
+            error(xhr);
         }
-    }
+    };
+    xhr.onerror = () => {
+        error(xhr);
+    };
+    xhr.ontimeout = e => {
+        timeout(e);
+    };
 }

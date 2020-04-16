@@ -53,6 +53,7 @@ sub.onclick=()=>{
                     img.src=`/img/avatar/${json['tieUserID']}.jpg`;
                     img.style.width="32px";
                     img.style.height="32px";
+                    img.onerror = () => {img.src="/img/avatar/0.jpg"};
                     inp[2].innerHTML = json['tieUser'];
                     inp[2].appendChild(img);
                     inp[3].innerHTML = json['postTime'];
@@ -66,6 +67,10 @@ sub.onclick=()=>{
                         unsetEli.disabled=false;
                     }
                 }
+            },
+            error:(xhr)=>{
+                info.innerHTML="网络异常: "+xhr.status;
+                console.warn(xhr)
             }
         });
     } else {
@@ -95,6 +100,10 @@ del.onclick=()=>{
                 } else {
                     info.innerHTML="服务器繁忙";
                 }
+            },
+            error:(xhr)=>{
+                info.innerHTML="网络异常: "+xhr.status;
+                console.warn(xhr)
             }
         })
     }
@@ -130,6 +139,10 @@ setEli.onclick=()=>{
             } else {
                 info.innerHTML="输入格式错误";
             }
+        },
+        error:(xhr)=>{
+            info.innerHTML="网络异常: "+xhr.status;
+            console.warn(xhr)
         }
     })
 };
@@ -156,6 +169,10 @@ unsetEli.onclick=()=>{
             } else {
                 info.innerHTML="输入格式错误";
             }
+        },
+        error:(xhr)=>{
+            info.innerHTML="网络异常: "+xhr.status;
+            console.warn(xhr)
         }
     })
 };

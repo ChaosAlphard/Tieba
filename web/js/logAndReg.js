@@ -58,12 +58,10 @@ logclose.onclick=()=>{
     logwin.style.display="none";
 };
 logsub.onclick=()=>{
-    let logusr = sel(".logusr");
-    let logpwd = sel(".logpwd");
-    let usrval = logusr.value;
-    let pwdval = logpwd.value;
+    const usrval = sel(".logusr").value;
+    const pwdval = sel(".logpwd").value;
 
-    if(usrval!==""&&pwdval!==""){
+    if(usrval===""||pwdval===""){
         logmpt.innerHTML="不能为空";
         return;
     }
@@ -90,6 +88,9 @@ logsub.onclick=()=>{
             } else {
                 logmpt.innerHTML="登录失败";
             }
+        },
+        error: xhr => {
+            regmpt.innerHTML="网络异常: "+xhr.status;
         }
     });
 };
@@ -262,11 +263,12 @@ ipts[4].onblur=checkCaptcha;
 regsub.onclick=()=>{
     if(checkAccount()&&checkNickname()&&checkPassword()&&checkPwdAgain()&&checkCaptcha()){
         regmpt.innerHTML="注册中";
+        const account = ipts[0].value;
         ajax({
             isPost: true,
             url: "RegisterServlet",
             data: {
-                "account": ipts[0].value,
+                "account": account,
                 "nickname": ipts[1].value,
                 "password": ipts[2].value
             },
@@ -277,6 +279,14 @@ regsub.onclick=()=>{
                     alert("注册成功");
                     regwin.style.display="none";
                     logwin.style.display="block";
+                    sel(".logusr").value = account;
+                    sel(".logpwd").value = "";
+                    tips[0].innerHTML="4-18字符,字母+数字组成,字母开头,不能含有其他字符";
+                    tips[1].innerHTML="4-12字符,不能含有特殊符号";
+                    tips[2].innerHTML="4-16字符,字母或数字,可以使用!@#$%,.^符号";
+                    tips[3].innerHTML="确认密码";
+                    tips[4].innerHTML="输入验证码";
+                    regmpt.innerHTML="";
                 } else if(xhrt==="aot") {
                     regmpt.innerHTML="账户名已存在";
                 } else if(xhrt==="usr") {
@@ -284,6 +294,9 @@ regsub.onclick=()=>{
                 } else {
                     regmpt.innerHTML="注册失败";
                 }
+            },
+            error: xhr => {
+                regmpt.innerHTML="网络异常: "+xhr.status;
             }
         });
     } else {

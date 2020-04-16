@@ -76,10 +76,10 @@ favorite.onclick=()=>{
                     isFavorite=0;
                 }
             } else if(res==="dataErr"){
-                alert("数据异常");
+                alert("身份认证失败");
                 location.reload();
             } else {
-                alert("请登录后再试");
+                alert("数据异常");
             }
         }
     });
@@ -181,7 +181,7 @@ replySubmit.onclick=()=>{
                     alert("回复成功");
                     location.reload();
                 } else if(res==="dataErr"){
-                    alert("数据异常");
+                    alert("身份认证失败, 刷新网页后再试");
                 } else if(res==="daoErr"){
                     alert("回复失败, 服务器繁忙");
                 } else {
