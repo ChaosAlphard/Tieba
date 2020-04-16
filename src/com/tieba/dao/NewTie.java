@@ -1,8 +1,8 @@
-package com.dao;
+package com.tieba.dao;
 
-import com.common.ConnSQL;
-import com.common.SQLHandler;
-import com.tools.TimeTool;
+import com.tieba.common.ConnSQL;
+import com.tieba.common.SQLHandler;
+import com.tieba.tools.TimeTool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

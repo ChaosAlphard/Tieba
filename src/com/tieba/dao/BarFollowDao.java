@@ -1,7 +1,7 @@
-package com.dao;
+package com.tieba.dao;
 
-import com.common.SQLHandler;
-import com.model.BarFollow;
+import com.tieba.common.SQLHandler;
+import com.tieba.model.BarFollow;
 
 import java.util.HashMap;
 import java.util.List;

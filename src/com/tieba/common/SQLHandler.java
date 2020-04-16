@@ -1,6 +1,7 @@
-package com.common;
+package com.tieba.common;
 
-import com.tools.DBTool;
+import com.tieba.tools.DBTool;
+import com.tieba.tools.TimeTool;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +27,9 @@ public class SQLHandler {
             error("查询失败");
             e.printStackTrace();
             return null;
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -43,6 +47,9 @@ public class SQLHandler {
             return lis;
         } catch(SQLException e) {
             error("查询失败");
+            e.printStackTrace();
+            return new ArrayList<>(0);
+        } catch(NullPointerException e) {
             e.printStackTrace();
             return new ArrayList<>(0);
         }
@@ -84,6 +91,9 @@ public class SQLHandler {
             error("查询失败");
             e.printStackTrace();
             return null;
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -99,6 +109,9 @@ public class SQLHandler {
             return res;
         } catch(SQLException e) {
             error("更新失败");
+            e.printStackTrace();
+            return 0;
+        } catch(NullPointerException e) {
             e.printStackTrace();
             return 0;
         }
@@ -129,10 +142,10 @@ public class SQLHandler {
     }
 
     private static void info(Object o) {
-        System.out.println("SQLHandler [ Info ]: "+o);
+        System.out.println(TimeTool.getCurrentTime()+" SQLHandler [ Info ]: "+o);
     }
 
     private static void error(Object o) {
-        System.out.println("SQLHandler [ Error ]: "+o);
+        System.out.println(TimeTool.getCurrentTime()+" SQLHandler [ Error ]: "+o);
     }
 }

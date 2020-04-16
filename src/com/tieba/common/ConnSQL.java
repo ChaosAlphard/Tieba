@@ -1,4 +1,6 @@
-package com.common;
+package com.tieba.common;
+
+import com.tieba.tools.TimeTool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -52,10 +54,10 @@ public class ConnSQL implements AutoCloseable {
     }
 
     private static void logInfo(Object o) {
-        System.out.println("ConnSQL[ Info ]: "+o);
+        System.out.println(TimeTool.getCurrentTime()+" ConnSQL[ Info ]: "+o);
     }
 
     private static void logError(Object o) {
-        System.out.println("ConnSQL[ Error ]: "+o);
+        System.out.println(TimeTool.getCurrentTime()+" ConnSQL[ Error ]: "+o);
     }
 }

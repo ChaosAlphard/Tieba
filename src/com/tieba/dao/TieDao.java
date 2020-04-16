@@ -1,7 +1,7 @@
-package com.dao;
+package com.tieba.dao;
 
-import com.common.SQLHandler;
-import com.model.Tie;
+import com.tieba.common.SQLHandler;
+import com.tieba.model.Tie;
 
 import java.util.HashMap;
 import java.util.List;
