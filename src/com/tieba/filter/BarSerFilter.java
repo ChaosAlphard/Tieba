@@ -1,4 +1,4 @@
-package filter;
+package com.tieba.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -17,7 +17,7 @@ public class BarSerFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)resp;
         HttpSession session = request.getSession();
         String lv = (String)session.getAttribute("adminLV");
-        System.out.println("filter.AdminFilter[log]: adminLV: "+lv);
+        System.out.println("com.tieba.filter.AdminFilter[log]: adminLV: "+lv);
         if(lv!=null&&(lv.equals("3")||lv.equals("2"))){
             chain.doFilter(req, resp);
         } else {

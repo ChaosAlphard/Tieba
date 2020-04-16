@@ -1,7 +1,7 @@
-package ser.admin;
+package com.tieba.servlet.admin;
 
-import com.dao.UserDao;
-import com.model.User;
+import com.tieba.dao.UserDao;
+import com.tieba.model.User;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -71,8 +71,8 @@ public class BannedUser extends HttpServlet {
         String uid = request.getParameter("userID");
 
         if(uid!=null&&uid.matches("^[0-9]+$")){
-            UserDao dao = new UserDao();
-            User u = dao.findByID(Integer.parseInt(uid));
+
+            User u = new UserDao().findByID(Integer.parseInt(uid));
             if(u!=null&&u.getUID()!=0&&u.getAccount()!=null){
                 result = String.valueOf(JSONArray.fromObject(u));
             } else {

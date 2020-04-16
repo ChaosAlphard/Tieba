@@ -1,20 +1,19 @@
-package ser;
+package com.tieba.servlet.feature;
 
-import com.dao.TieDao;
-import com.model.Tie;
-import net.sf.json.JSONArray;
+import com.tieba.dao.BarDao;
+import com.tieba.model.Bar;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "RecentlyTieServlet", urlPatterns = {"/RecentlyTieServlet"})
-public class RecentlyTieServlet extends HttpServlet {
+@WebServlet(name = "SearchServlet", urlPatterns = {"/SearchServlet"})
+public class SearchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -23,19 +22,16 @@ public class RecentlyTieServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        String result = "err";
 
-        TieDao dao = new TieDao();
-        List<Tie> lis = dao.findRecentlyTie();
+        String bar = request.getParameter("search");
+        if (bar!=null) {
+            String search = String.join("%",bar.split(" "));
 
-        if(lis != null) {
-            JSONArray json = JSONArray.fromObject(lis);
-            result = String.valueOf(json);
+            List<Bar> lis = new BarDao().FindBars(search);
+
+            request.setAttribute("list",lis);
+            RequestDispatcher dis = request.getRequestDispatcher("search.jsp");
+            dis.forward(request,response);
         }
-
-        PrintWriter out = response.getWriter();
-        out.print(result);
-        out.flush();
-        out.close();
     }
 }

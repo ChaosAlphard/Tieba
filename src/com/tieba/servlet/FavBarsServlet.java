@@ -1,7 +1,7 @@
-package ser;
+package com.tieba.servlet;
 
-import com.dao.BarFollowDao;
-import com.model.BarFollow;
+import com.tieba.dao.BarFollowDao;
+import com.tieba.model.BarFollow;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -34,8 +34,7 @@ public class FavBarsServlet extends HttpServlet {
             return;
         }
 
-        BarFollowDao dao = new BarFollowDao();
-        List<BarFollow> lis = dao.findFollowBars(Integer.parseInt(uid));
+        List<BarFollow> lis = new BarFollowDao().findFollowBars(Integer.parseInt(uid));
         if(lis!=null){
             JSONArray json = JSONArray.fromObject(lis);
             result = String.valueOf(json);

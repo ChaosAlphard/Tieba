@@ -1,4 +1,4 @@
-package ser.feat;
+package com.tieba.servlet.feature;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,14 +17,18 @@ public class LogoutServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
+        String uid = null;
+        String usr = null;
         Cookie[] cs = request.getCookies();
         if(cs!=null){
             for (Cookie c : cs) {
                 if(c.getName().equals("uid")){
+                    uid = c.getValue();
                     c.setMaxAge(0);//设为0表示立即删除
                     response.addCookie(c);
                 }
                 if(c.getName().equals("usr")){
+                    usr = c.getValue();
                     c.setMaxAge(0);
                     response.addCookie(c);
                 }
@@ -36,7 +40,7 @@ public class LogoutServlet extends HttpServlet {
         session.removeAttribute("usr");
         session.invalidate();//销毁session
 
-        System.out.println("Logout");
+        System.out.println("==================== ["+uid+"]"+usr+" 注销 ====================");
         RequestDispatcher dis = request.getRequestDispatcher("otherPage/logOut.jsp");
         dis.forward(request,response);
     }

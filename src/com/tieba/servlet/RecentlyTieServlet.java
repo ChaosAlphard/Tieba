@@ -1,19 +1,20 @@
-package ser.feat;
+package com.tieba.servlet;
 
-import com.dao.BarDao;
-import com.model.Bar;
+import com.tieba.dao.TieDao;
+import com.tieba.model.Tie;
+import net.sf.json.JSONArray;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "SearchServlet", urlPatterns = {"/SearchServlet"})
-public class SearchServlet extends HttpServlet {
+@WebServlet(name = "RecentlyTieServlet", urlPatterns = {"/RecentlyTieServlet"})
+public class RecentlyTieServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -22,17 +23,18 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+        String result = "err";
 
-        String bar = request.getParameter("search");
-        if (bar!=null) {
-            String search = String.join("%",bar.split(" "));
+        List<Tie> lis = new TieDao().findRecentlyTie();
 
-            BarDao dao = new BarDao();
-            List<Bar> lis = dao.FindBars(search);
-
-            request.setAttribute("list",lis);
-            RequestDispatcher dis = request.getRequestDispatcher("search.jsp");
-            dis.forward(request,response);
+        if(lis != null) {
+            JSONArray json = JSONArray.fromObject(lis);
+            result = String.valueOf(json);
         }
+
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
     }
 }

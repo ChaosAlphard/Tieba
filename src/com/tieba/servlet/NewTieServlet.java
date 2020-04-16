@@ -1,6 +1,6 @@
-package ser;
+package com.tieba.servlet;
 
-import com.dao.NewTie;
+import com.tieba.dao.NewTie;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,20 +26,21 @@ public class NewTieServlet extends HttpServlet {
 
         String barID = request.getParameter("barID");
         String uid = request.getParameter("uid");
-        System.out.println("uid: "+uid);
         String usr = request.getParameter("usr");
-        System.out.println("usr: "+usr);
         String title = request.getParameter("title");
-        System.out.println("title: "+title);
         String main = request.getParameter("main");
-        System.out.println("main: "+main);
+
+        System.out.println("CreateNewTie: \n\tBarId: "
+                +barID+"\n\tUserId: "+uid+
+                "\n\tUserName: "+usr+
+                "\n\tTieTitle: "+title+
+                "\n\tTieContent: "+main);
 
         if(suid.equals(uid)&&susr.equals(usr)&&barID!=null&&title!=null&&main!=null
         &&barID.matches("^[0-9]+$")&&uid.matches("^[0-9]+$")&&
         title.length()>0&&title.length()<21&&main.length()>0&&main.length()<1000){
 
-            NewTie dao = new NewTie();
-            int i=dao.CreateNewTie(Integer.parseInt(barID),title,main,usr,Integer.parseInt(uid));
+            int i = new NewTie().CreateNewTie(Integer.parseInt(barID),title,main,usr,Integer.parseInt(uid));
             if(i!=0){
                 result = "suc";
             }

@@ -1,6 +1,6 @@
-package ser.admin;
+package com.tieba.servlet.admin;
 
-import com.dao.BarDao;
+import com.tieba.dao.BarDao;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,14 +25,12 @@ public class CreateBar extends HttpServlet {
         if(name!=null&&name.length()>0&&name.length()<=12&&
           !name.matches("[^A-z0-9\u4e00-\u9fa5]")&&
           cont!=null&&cont.length()>0&&cont.length()<=280){
+
             BarDao dao = new BarDao();
             if(dao.isBarExist(name)){
                 result="rep";
-            } else {
-                int i=dao.createNewBar(name,cont);
-                if(i!=0){
-                    result="suc";
-                }
+            } else if(dao.createNewBar(name,cont) > 0) {
+                result="suc";
             }
         }
         webPrint(result,response);

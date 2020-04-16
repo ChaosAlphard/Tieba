@@ -1,6 +1,6 @@
-package ser;
+package com.tieba.servlet;
 
-import com.dao.BarFollowDao;
+import com.tieba.dao.TieFavoriteDao;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,42 +9,42 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "FollowBar", urlPatterns = {"/FollowBar"})
-public class FollowBar extends HttpServlet {
+@WebServlet(name = "FavoriteTie", urlPatterns = {"/FavoriteTie"})
+public class FavoriteTie extends HttpServlet {
     private void print(Object o) {
-        System.out.println("FollowBar[log]: " + o);
+        System.out.println("FavoriteTie[log]: " + o);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        String result = "err";
+        String result="err";
         String uid = request.getParameter("UID");
-        String barID = request.getParameter("barID");
-        String barName = request.getParameter("barName");
-        String follow = request.getParameter("follow");
+        String tieID = request.getParameter("tieID");
+        String tieTitle = request.getParameter("tieTitle");
+        String favorite = request.getParameter("favorite");
 
         if(uid!=null&&uid.matches("^[0-9]+$")&&
-        barID!=null&&barID.matches("^[0-9]+$")&&barName!=null){
+        tieID!=null&&tieID.matches("^[0-9]+$")&&tieTitle!=null){
 
-            print("follow: "+follow);
+            print("fav: "+favorite);
             int id = Integer.parseInt(uid);
-            int bid= Integer.parseInt(barID);
-            BarFollowDao dao = new BarFollowDao();
+            int tid= Integer.parseInt(tieID);
+            TieFavoriteDao dao = new TieFavoriteDao();
             int i=0;
-            switch(follow) {
+            switch(favorite) {
                 case "0":
-                    i=dao.followBar(id,bid,barName);
+                    i=dao.favoriteTie(id,tid,tieTitle);
                     break;
                 case "1":
-                    i=dao.unfollowBar(id,bid);
+                    i=dao.unfavoriteTie(id,tid);
                     break;
             }
             if(i!=0){
-                result = "suc";
+                result="suc";
             } else {
-                result = "dataErr";
+                result="dataErr";
             }
         }
         webPrint(result,response);
@@ -54,20 +54,19 @@ public class FollowBar extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        String result = "err";
+        String result="err";
         String uid = request.getParameter("UID");
-        String barID = request.getParameter("barID");
+        String tieID = request.getParameter("tieID");
 
         if(uid!=null&&uid.matches("^[0-9]+$")&&
-          barID!=null&&barID.matches("^[0-9]+$")){
+          tieID!=null&&tieID.matches("^[0-9]+$")){
             int id = Integer.parseInt(uid);
-            int bid= Integer.parseInt(barID);
-            BarFollowDao dao = new BarFollowDao();
-
-            if(dao.isFollowBar(id,bid)){
-                result = "followed";
+            int tid= Integer.parseInt(tieID);
+            TieFavoriteDao dao = new TieFavoriteDao();
+            if(dao.isFavoriteTie(id,tid)){
+                result="favorited";
             } else {
-                result = "unfollow";
+                result="unfavorite";
             }
         }
         webPrint(result,response);

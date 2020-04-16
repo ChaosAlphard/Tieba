@@ -1,6 +1,6 @@
-package ser.admin;
+package com.tieba.servlet.admin;
 
-import com.dao.TieDao;
+import com.tieba.dao.TieDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,18 +55,16 @@ public class SetElite extends HttpServlet {
     }
 
     private String setElite(int tieID) {
-        TieDao dao = new TieDao();
-        int i = dao.setTieElite(tieID);
-        if(i!=0){
+        int i = new TieDao().setTieElite(tieID);
+        if(i > 0){
             return "suc";
         } else {
             return "dataErr";
         }
     }
     private String unsetElite(int tieID) {
-        TieDao dao = new TieDao();
-        int i = dao.unsetTieElite(tieID);
-        if(i!=0){
+        int i = new TieDao().unsetTieElite(tieID);
+        if(i > 0){
             return "suc";
         } else {
             return "dataErr";

@@ -1,4 +1,4 @@
-package ser.feat;
+package com.tieba.servlet.feature;
 
 import sun.misc.BASE64Decoder;
 
@@ -56,7 +56,7 @@ public class UploadServlet extends HttpServlet {
                     b[i]+=256;
                 }
             }
-            String imgFile=path+"/img/avatar/"+uid+".jpg";
+            String imgFile=path+ "/img/avatar/" +uid+".jpg";
             System.out.println("保存至"+imgFile);
             OutputStream outs = new FileOutputStream(imgFile);
             outs.write(b);

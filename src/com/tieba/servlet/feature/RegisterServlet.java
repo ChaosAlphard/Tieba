@@ -1,7 +1,7 @@
-package ser.feat;
+package com.tieba.servlet.feature;
 
-import com.dao.UserDao;
-import com.model.User;
+import com.tieba.dao.UserDao;
+import com.tieba.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,9 +28,7 @@ public class RegisterServlet extends HttpServlet {
         UserDao dao=new UserDao();
         //判断账户名是否存在
         User user = dao.FindSingle("Account",aot);
-        System.out.println(user);
         if (user!=null){
-            System.out.println(user.toString());
             result="aot";
         } else {
             //判断昵称是否存在

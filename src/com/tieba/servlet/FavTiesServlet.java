@@ -1,7 +1,7 @@
-package ser;
+package com.tieba.servlet;
 
-import com.dao.TieFavoriteDao;
-import com.model.TieFavorite;
+import com.tieba.dao.TieFavoriteDao;
+import com.tieba.model.TieFavorite;
 import net.sf.json.JSONArray;
 
 import javax.servlet.annotation.WebServlet;
@@ -31,9 +31,9 @@ public class FavTiesServlet extends HttpServlet {
         String uid = request.getParameter("uid");
 
         if(uid!=null&&uid.matches("^[0-9]+$")){
-            TieFavoriteDao dao = new TieFavoriteDao();
-            List<TieFavorite> lis = dao.findFavoriteTies(Integer.parseInt(uid));
-            if(lis!=null && !lis.isEmpty()){
+
+            List<TieFavorite> lis = new TieFavoriteDao().findFavoriteTies(Integer.parseInt(uid));
+            if(lis!=null){
                 JSONArray json = JSONArray.fromObject(lis);
                 result = String.valueOf(json);
             }

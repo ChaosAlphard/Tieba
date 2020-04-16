@@ -1,4 +1,4 @@
-package ser.feat;
+package com.tieba.servlet.feature;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,8 +17,6 @@ public class LoginConfirm extends HttpServlet {
 
         String uid = request.getParameter("uid");
         String usr = request.getParameter("usr");
-        System.out.println(uid);
-        System.out.println(usr);
 
         HttpSession session=request.getSession();
         session.setAttribute("uid",uid);

@@ -1,6 +1,6 @@
-package ser.feat;
+package com.tieba.servlet.feature;
 
-import com.dao.UserDao;
+import com.tieba.dao.UserDao;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -24,8 +24,7 @@ public class LoginServlet extends HttpServlet {
         String account = request.getParameter("aot");
         String password = request.getParameter("pwd");
 
-        UserDao dao=new UserDao();
-        String[] info = dao.Login(account,password);
+        String[] info = new UserDao().Login(account,password);
         System.out.println("info:"+info[0]+"-"+info[1]+"-"+info[2]);
 
         if(info[0]!=null&&info[1]!=null&&info[2]!=null){
@@ -36,7 +35,6 @@ public class LoginServlet extends HttpServlet {
                 result=String.valueOf(json);
             }
         }
-        System.out.println("LoginResult>>"+result);
 
         PrintWriter out=response.getWriter();
         out.print(result);

@@ -1,6 +1,6 @@
-package ser.admin;
+package com.tieba.servlet.admin;
 
-import com.dao.UserDao;
+import com.tieba.dao.UserDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +29,7 @@ public class AdminLogin extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        UserDao dao = new UserDao();
-        String[] info = dao.AdminLogin(account,password);
+        String[] info = new UserDao().AdminLogin(account,password);
         System.out.println("info:"+info[0]+"-"+info[1]+"-"+info[2]);
 
         if(info[0]!=null&&info[1]!=null&&info[2]!=null){

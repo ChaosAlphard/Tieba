@@ -1,7 +1,7 @@
-package ser.admin;
+package com.tieba.servlet.admin;
 
-import com.dao.TieDao;
-import com.model.Tie;
+import com.tieba.dao.TieDao;
+import com.tieba.model.Tie;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -26,8 +26,9 @@ public class DeleteTie extends HttpServlet {
 
         if(LV!=null&&(LV.equals("2")||LV.equals("3"))) {
             if (tieID != null && tieID.matches("^[0-9]+$")) {
-                TieDao dao = new TieDao();
                 int id = Integer.parseInt(tieID);
+
+                TieDao dao = new TieDao();
                 Tie t = dao.FindByID(id);
                 if (t != null && t.getTieID() != 0 && t.getTieTitle() != null) {
                     if (dao.deleteTie(id) > 0) {
@@ -55,8 +56,8 @@ public class DeleteTie extends HttpServlet {
         String tieID = request.getParameter("tieID");
 
         if(tieID!=null&&tieID.matches("^[0-9]+$")){
-            TieDao dao = new TieDao();
-            Tie t = dao.FindByID(Integer.parseInt(tieID));
+            Tie t = new TieDao().FindByID(Integer.parseInt(tieID));
+
             if(t!=null&&t.getTieID()!=0&&t.getTieTitle()!=null&&t.getVisible()!=0){
                 result = String.valueOf(JSONArray.fromObject(t));
             } else {

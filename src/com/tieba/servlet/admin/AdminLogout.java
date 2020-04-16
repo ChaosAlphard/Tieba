@@ -1,4 +1,4 @@
-package ser.admin;
+package com.tieba.servlet.admin;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

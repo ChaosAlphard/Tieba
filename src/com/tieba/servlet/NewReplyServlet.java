@@ -1,6 +1,6 @@
-package ser;
+package com.tieba.servlet;
 
-import com.dao.NewTie;
+import com.tieba.dao.NewTie;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,8 +35,7 @@ public class NewReplyServlet extends HttpServlet {
         &&tieID.matches("^[0-9]+$")&&uid.matches("^[0-9]+$")
         &&main.length()>0&&main.length()<10000){
 
-            NewTie dao = new NewTie();
-            int i = dao.CreateNewReply(Integer.parseInt(tieID),main,usr,Integer.parseInt(uid));
+            int i = new NewTie().CreateNewReply(Integer.parseInt(tieID),main,usr,Integer.parseInt(uid));
             if(i==2){
                 result = "suc";
             }

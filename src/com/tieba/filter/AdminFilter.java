@@ -1,4 +1,4 @@
-package filter;
+package com.tieba.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "AdminFilter", urlPatterns = {"/AdminPage/userManage.jsp","/AdminPage/barManage,jsp"})
+@WebFilter(filterName = "AdminFilter", urlPatterns = {"/AdminPage/userManage.jsp", "/AdminPage/barManage,jsp"})
 public class AdminFilter implements Filter {
     public void init(FilterConfig config) {}
     public void destroy() {}
@@ -17,7 +17,7 @@ public class AdminFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)resp;
         HttpSession session = request.getSession();
         String lv = (String)session.getAttribute("adminLV");
-        System.out.println("filter.AdminFilter[log]: adminLV: "+lv);
+        System.out.println("com.tieba.filter.AdminFilter[log]: adminLV: "+lv);
         if(lv!=null&&lv.equals("3")){
             chain.doFilter(req, resp);
         } else {

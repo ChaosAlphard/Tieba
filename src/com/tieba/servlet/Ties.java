@@ -1,12 +1,12 @@
-package ser;
+package com.tieba.servlet;
 
-import com.dao.BarDao;
-import com.dao.TieDao;
-import com.dao.TieReplyDao;
-import com.model.Bar;
-import com.model.Tie;
-import com.model.TieReply;
-import com.tools.ChangePage;
+import com.tieba.dao.BarDao;
+import com.tieba.dao.TieDao;
+import com.tieba.dao.TieReplyDao;
+import com.tieba.model.Bar;
+import com.tieba.model.Tie;
+import com.tieba.model.TieReply;
+import com.tieba.tools.ChangePage;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,15 +36,13 @@ public class Ties extends HttpServlet {
             return;
         }
 
-        TieDao tDao = new TieDao();
-        Tie t = tDao.FindByID(Integer.parseInt(tieID));
+        Tie t = new TieDao().FindByID(Integer.parseInt(tieID));
         if(t == null) {
             response.sendRedirect("errPage/notFound.html");
             return;
         }
-        BarDao bDao = new BarDao();
-        Bar b = bDao.FindById(t.getBarID());
 
+        Bar b = new BarDao().FindById(t.getBarID());
         if(b==null||b.getBarID()==0||b.getBarName()==null||t.getVisible()!=1){
             response.sendRedirect("errPage/notFound.html");
             return;
@@ -54,8 +52,7 @@ public class Ties extends HttpServlet {
             return;
         }
 
-        TieReplyDao trDao = new TieReplyDao();
-        List<TieReply> lis = trDao.FindByTieID(Integer.parseInt(tieID));
+        List<TieReply> lis = new TieReplyDao().FindByTieID(Integer.parseInt(tieID));
 
         int curPage = 1;
         if(pageS!=null&&pageS.matches("^[0-9]+$")){
