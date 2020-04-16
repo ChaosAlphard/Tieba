@@ -9,9 +9,9 @@
     Time: 15:42
     -->
     <title>个人信息</title>
-    <link rel="stylesheet" href="./plugins/fontawesome.css">
-    <link rel="stylesheet" href="./plugins/cropper.css">
-    <link rel="stylesheet" href="./css/myInfoStyle.css">
+    <link rel="stylesheet" href="plugins/fontawesome.css">
+    <link rel="stylesheet" href="plugins/cropper.css">
+    <link rel="stylesheet" href="css/myInfoStyle.css">
 </head>
 <body>
 <div class="info">
@@ -43,8 +43,8 @@
     const uid = "${sessionScope.uid}";
     const usr = "${sessionScope.usr}";
 </script>
-<script src="./js/readCookie.js"></script>
-<script src="./plugins/cropper.js"></script>
-<script src="./js/myInfoMain.js"></script>
+<script src="js/readCookie.js"></script>
+<script src="plugins/cropper.js"></script>
+<script src="js/myInfoMain.js"></script>
 </body>
 </html>

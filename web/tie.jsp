@@ -10,9 +10,9 @@
     Time: 19:33
     -->
     <title>${tie.tieTitle} - ${bar.barName}吧</title>
-    <link rel="stylesheet" href="./plugins/fontawesome.css">
-    <link rel="stylesheet" href="./css/logAndReg.css">
-    <link rel="stylesheet" href="./css/tieStyle.css">
+    <link rel="stylesheet" href="plugins/fontawesome.css">
+    <link rel="stylesheet" href="css/logAndReg.css">
+    <link rel="stylesheet" href="css/tieStyle.css">
 </head>
 <body>
 <div class="topnav"><%@include file="logAndReg.jsp"%></div>

@@ -29,12 +29,12 @@
         <div class="inp"><input type="text" class="tieID"></div>
         <div><button type="button" class="sub">查询</button></div>
         <div class="lab">帖子标题:</div>
-        <div class="inp"><%--<input type="text">--%></div>
+        <div class="inp"></div>
         <div class="info"></div>
         <div class="lab">发帖用户:</div>
-        <div class="inp"><%--<input type="text">--%></div>
+        <div class="inp"></div>
         <div class="lab">发帖时间:</div>
-        <div class="inp"><%--<input type="text">--%></div>
+        <div class="inp"></div>
         <div class="deldiv">
             <button type="button" class="del">删除帖子</button>
             <button type="button" class="setEli">设为精品</button>

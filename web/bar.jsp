@@ -10,9 +10,9 @@
     Time: 12:33
     -->
     <title>${bar.barName}吧</title>
-    <link rel="stylesheet" href="./plugins/fontawesome.css">
-    <link rel="stylesheet" href="./css/logAndReg.css">
-    <link rel="stylesheet" href="./css/barStyle.css">
+    <link rel="stylesheet" href="plugins/fontawesome.css">
+    <link rel="stylesheet" href="css/logAndReg.css">
+    <link rel="stylesheet" href="css/barStyle.css">
 </head>
 <body>
 <div class="topnav"><%@ include file="logAndReg.jsp"%></div>

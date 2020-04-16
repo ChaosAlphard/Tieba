@@ -10,8 +10,8 @@
     Time: 21:35
     -->
     <title>贴吧搜索</title>
-    <link rel="stylesheet" href="./plugins/fontawesome.css">
-    <link rel="stylesheet" href="./css/searchStyle.css">
+    <link rel="stylesheet" href="plugins/fontawesome.css">
+    <link rel="stylesheet" href="css/searchStyle.css">
 </head>
 <body>
 <div class="base">
