@@ -52,7 +52,7 @@ public class TieReply {
     }
 
     public String getReTime() {
-        return reTime;
+        return this.getTime(reTime);
     }
 
     public void setReTime(String reTime) {
@@ -65,6 +65,10 @@ public class TieReply {
 
     public void setVisible(int visible) {
         this.visible = visible;
+    }
+
+    private String getTime(String time) {
+        return time.substring(0, time.indexOf("."));
     }
 
     @Override

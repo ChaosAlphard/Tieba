@@ -8,14 +8,21 @@ import net.sf.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DaoTest {
     public static void main(String[] args){
         DaoTest test = new DaoTest();
-//        test.isBarExist("Java");
-        for(int i=0; i<20; i++) {
-            new Thread(() -> test.findByName("a")).start();
-        }
+        test.isBarExist("Java");
+//        for(int i=0; i<20; i++) {
+//            new Thread(() -> test.findByName("a")).start();
+//        }
+    }
+
+    private void findColumn(String column, Object value) {
+        UserDao dao = new UserDao();
+        Optional<User> user = Optional.ofNullable(dao.FindSingle(column,value));
+        System.out.println(user);
     }
 
     private void isBarExist(String name) {

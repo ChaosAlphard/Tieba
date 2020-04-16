@@ -63,7 +63,7 @@ public class Tie {
     }
 
     public String getPostTime() {
-        return postTime;
+        return this.getTime(postTime);
     }
 
     public void setPostTime(String postTime) {
@@ -71,7 +71,7 @@ public class Tie {
     }
 
     public String getUpdateTime() {
-        return updateTime;
+        return this.getTime(updateTime);
     }
 
     public void setUpdateTime(String updateTime) {
@@ -92,6 +92,10 @@ public class Tie {
 
     public void setElite(int elite) {
         this.elite = elite;
+    }
+
+    private String getTime(String time) {
+        return time.substring(0, time.indexOf("."));
     }
 
     @Override
