@@ -1,4 +1,4 @@
-package com.model;
+package com.tieba.model;
 
 import java.util.Objects;
 
