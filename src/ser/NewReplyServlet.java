@@ -23,15 +23,18 @@ public class NewReplyServlet extends HttpServlet {
 
         String tieID = request.getParameter("tieID");
         String uid = request.getParameter("uid");
-        System.out.println("uid: "+uid);
         String usr = request.getParameter("usr");
-        System.out.println("usr: "+usr);
         String main = request.getParameter("main");
-        System.out.println("main: "+main);
+
+        System.out.println("CreateNewReply: \n\tTieId: "
+                +tieID+"\n\tUserId: "+uid+
+                "\n\tUserName: "+usr+
+                "\n\tReplyContent: "+main);
 
         if(suid.equals(uid)&&susr.equals(usr)&&tieID!=null&&main!=null
         &&tieID.matches("^[0-9]+$")&&uid.matches("^[0-9]+$")
         &&main.length()>0&&main.length()<10000){
+
             NewTie dao = new NewTie();
             int i = dao.CreateNewReply(Integer.parseInt(tieID),main,usr,Integer.parseInt(uid));
             if(i==2){

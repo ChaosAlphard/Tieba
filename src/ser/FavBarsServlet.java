@@ -36,7 +36,7 @@ public class FavBarsServlet extends HttpServlet {
 
         BarFollowDao dao = new BarFollowDao();
         List<BarFollow> lis = dao.findFollowBars(Integer.parseInt(uid));
-        if(lis!=null && !lis.isEmpty()){
+        if(lis!=null){
             JSONArray json = JSONArray.fromObject(lis);
             result = String.valueOf(json);
         }

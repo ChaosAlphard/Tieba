@@ -8,25 +8,20 @@ import java.util.List;
 import java.util.Map;
 
 public class UserDao {
-    public User FindSingle(String column, String value) {
-        //pst对象使用setString为 where ? = ? 赋值时,由于会自动加单引号
-        //导致变为 where 'uid'='1' , 从而导致查询失败
-        //所以需要用concat来去掉单引号
-        String sql="SELECT * FROM user WHERE concat(?)=? limit 1";
+    public User FindSingle(String column, Object value) {
+        String sql="SELECT * FROM user WHERE "+column+"=? limit 1";
 
         Map<Integer, Object> map = new HashMap<>();
-        map.put(1, column);
-        map.put(2, value);
+        map.put(1, value);
 
         return SQLHandler.querySingle(sql, map, User.class);
     }
 
-    public List<User> FindMultiple(String column, int value) {
-        String sql="SELECT * FROM user WHERE concat(?)=?";
+    public List<User> FindMultiple(String column, Object value) {
+        String sql="SELECT * FROM user WHERE "+column+"=?";
 
         Map<Integer, Object> map = new HashMap<>();
-        map.put(1, column);
-        map.put(2, value);
+        map.put(1, value);
 
         return SQLHandler.queryMultiple(sql, map, User.class);
     }

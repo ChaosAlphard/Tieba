@@ -93,12 +93,14 @@ public class SQLHandler {
 
             setParams(pst, params);
 
+            int res = pst.executeUpdate();
+
             printSQL(pst);
-            return pst.executeUpdate();
+            return res;
         } catch(SQLException e) {
             error("更新失败");
             e.printStackTrace();
-            return -1;
+            return 0;
         }
     }
 

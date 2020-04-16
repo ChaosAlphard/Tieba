@@ -29,7 +29,7 @@ public class NewTie {
         return SQLHandler.update(sql,map);
     }
 
-    public synchronized int CreateNewReply(int tieID,String reply,String reUser,int reUserID) {
+    public int CreateNewReply(int tieID,String reply,String reUser,int reUserID) {
         ConnSQL conn = new ConnSQL(false);
         Connection connection = conn.getConn();
 

@@ -25,8 +25,7 @@ public class SearchServlet extends HttpServlet {
 
         String bar = request.getParameter("search");
         if (bar!=null) {
-            String rs = bar.replaceAll(" ","");
-            String search = String.join("%",rs.split(""));
+            String search = String.join("%",bar.split(" "));
 
             BarDao dao = new BarDao();
             List<Bar> lis = dao.FindBars(search);

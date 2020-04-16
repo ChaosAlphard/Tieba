@@ -96,26 +96,21 @@ public class LoginServlet extends HttpServlet {
             for (Cookie c : cs) {
                 if(c.getName().equals("uid")){
                     uid=URLDecoder.decode(c.getValue(),"UTF-8");
-                    //c.setMaxAge(604800);
-                    //uidHttp=c.isHttpOnly();
-                    System.out.println("uid: "+uid+"  HttpOnly: "+c.isHttpOnly());
                 }
                 if(c.getName().equals("usr")){
                     usr=URLDecoder.decode(c.getValue(),"UTF-8");
-                    //c.setMaxAge(604800);
-                    //usrHttp=c.isHttpOnly();
-                    System.out.println("usr: "+usr+"  HttpOnly: "+c.isHttpOnly());
                 }
             }
 
             if(uid!=null&&usr!=null){
                 HttpSession session=request.getSession();
-                System.out.println("SessionUid:"+session.getAttribute("uid"));
-                System.out.println("SessionUsr:"+session.getAttribute("usr"));
+                System.out.println("SessionID: "+session.getAttribute("uid")+
+                                   "      \tCookieID: "+uid +
+                                   "\nSessionUser: "+session.getAttribute("usr")+
+                                   "  \tCookieUser: "+usr);
                 if(session.getAttribute("uid")==null||session.getAttribute("usr")==null){
                     session.setAttribute("uid",uid);
                     session.setAttribute("usr",usr);
-                    System.out.println("shouldReLoadPage...");
                     result="reload";
                 } else {
                     result="haveSession";

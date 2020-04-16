@@ -30,8 +30,7 @@ public class DeleteTie extends HttpServlet {
                 int id = Integer.parseInt(tieID);
                 Tie t = dao.FindByID(id);
                 if (t != null && t.getTieID() != 0 && t.getTieTitle() != null) {
-                    int i = dao.deleteTie(id);
-                    if (i != 0) {
+                    if (dao.deleteTie(id) > 0) {
                         result = "suc";
                     } else {
                         result = "dataErr";

@@ -22,24 +22,24 @@ public class RegisterServlet extends HttpServlet {
         String usr=request.getParameter("nickname");
         String pwd=request.getParameter("password");
 
-        System.out.println(aot);
-        System.out.println(usr);
-        System.out.println(pwd);
+        System.out.println("Register========================================\n\tAccount: "
+                +aot+"\n\tNickname: "+usr+"\n\tPassword: "+pwd);
 
         UserDao dao=new UserDao();
         //判断账户名是否存在
-        User u = dao.FindSingle("Account",aot);
-        if (u!=null){
+        User user = dao.FindSingle("Account",aot);
+        System.out.println(user);
+        if (user!=null){
+            System.out.println(user.toString());
             result="aot";
         } else {
             //判断昵称是否存在
-            u = dao.FindSingle("Username",usr);
-            if(u!=null){
+            user = dao.FindSingle("Username",usr);
+            if(user!=null){
                 result="usr";
             } else {
                 //判断是否添加成功
-                int i=dao.Register(aot,usr,pwd);
-                if(i!=0){
+                if(dao.Register(aot,usr,pwd) > 0){
                     result="suc";
                 }
             }
