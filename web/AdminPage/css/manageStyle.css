@@ -4,7 +4,7 @@ body{
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background: url("https://s2.ax1x.com/2020/03/05/3TFFZn.jpg") fixed center center / cover;
+    background: var(--admin-bg-color) var(--abg) fixed center center / cover;
 }
 .base{
     width: 1000px;
@@ -62,8 +62,7 @@ body{
 }
 
 .g1{
-    /*--BG:url("../img/00.jpg");*/
-    --BG:url("https://s2.ax1x.com/2020/03/05/3TFPqs.jpg");
+    --BG: var(--abg-00);
     /*background-position: right top;*/
     grid-column-start: 1;
     grid-column-end: 3;
@@ -71,28 +70,23 @@ body{
     grid-row-end: 3;
 }
 .g2{
-    /*--BG:url("../img/04.jpg");*/
-    --BG:url("https://s2.ax1x.com/2020/03/05/3TiXIP.jpg");
+    --BG: var(--abg-04);
     grid-column-start: 3;
     grid-column-end: 5;
 }
 .g3{
-    /*--BG:url("../img/01.jpg");*/
-    --BG:url("https://s2.ax1x.com/2020/03/05/3TixG8.jpg");
+    --BG: var(--abg-01);
 }
 .g4{
-    /*--BG:url("../img/03.jpg");*/
-    --BG:url("https://s2.ax1x.com/2020/03/05/3TF9MQ.jpg");
+    --BG: var(--abg-03);
 }
 .g5{
-    /*--BG:url("../img/02.jpg");*/
-    --BG:url("https://s2.ax1x.com/2020/03/05/3TizRS.jpg");
+    --BG: var(--abg-02);
     grid-column-start: 1;
     grid-column-end: 3;
 }
 .g6{
-    /*--BG:url("../img/00.jpg");*/
-    --BG:url("https://s2.ax1x.com/2020/03/05/3TFPqs.jpg");
+    --BG: var(--abg-00);
 }
 .g7{--BG:#408;}
 .g8{--BG:#A6A;}

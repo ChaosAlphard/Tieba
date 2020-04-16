@@ -1,19 +1,13 @@
-/*
-bg            = https://s2.ax1x.com/2020/03/05/3TFFZn.jpg
-bg-blur       = https://s2.ax1x.com/2020/03/05/3TFkaq.jpg
-bg-blur-cover = https://s2.ax1x.com/2020/03/05/3TFAI0.jpg
-*/
-
 body{
     margin: 0;
     display: flex;
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background: url("https://s2.ax1x.com/2020/03/05/3TFFZn.jpg") fixed center center / cover;
+    background: var(--admin-bg-color) var(--abg) fixed center center / cover;
 }
 .base{
-    background: url("https://s2.ax1x.com/2020/03/05/3TFAI0.jpg") fixed center center / cover;
+    background: var(--admin-bg-color) var(--abg-blur-cover) fixed center center / cover;
     width: 600px;
     height: 400px;
     display: grid;

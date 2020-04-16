@@ -48,7 +48,7 @@
     color: #FFFFFF;
 }
 .closelog:hover,.closereg:hover{
-    color: #9370DD;
+    color: var(--BC);
 }
 /* 登录/注册Title文字 */
 .logtitle,.regtitle{
@@ -75,12 +75,12 @@
 /* 登录相关 */
 /* 登录窗体 */
 .logdiv{
-    background: url("https://s2.ax1x.com/2020/03/05/3TiWUx.jpg") fixed top center / cover;
+    background: var(--default-color) var(--bg-blur) fixed top center / cover;
     width: 400px;
     height:400px;
     border-radius: 20px;
     position: relative;
-    box-shadow: 0 0 20px 10px #9370DD inset;
+    box-shadow: 0 0 20px 10px var(--BC) inset;
 }
 
 /* 表单div, 居中显示div内容 */
@@ -113,12 +113,12 @@
 
 /* 注册相关 */
 .regdiv{
-    background: url("https://s2.ax1x.com/2020/03/05/3TiWUx.jpg") fixed top center / cover;
+    background: var(--default-color) var(--bg-blur) fixed top center / cover;
     width: 800px;
     height:600px;
     border-radius: 20px;
     position: relative;
-    box-shadow: 0 0 20px 10px #9370DD inset;
+    box-shadow: 0 0 20px 10px var(--BC) inset;
 }
 .account,.nickname,.password,.checkpwd,.captdiv{
     padding: 10px 0 10px 0;

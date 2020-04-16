@@ -1,3 +1,29 @@
+html, body {
+    /* CSS变量 */
+    --default-color: #291D43;  /* 默认背景色 */
+    --BC:#9370DD; /* border color */
+    --BC-alpha-66: #9370DD66; /* 首页帖子透明背景 */
+    --BC-alpha-33:#9370DD33; /* reply 引用背景色 */
+    /* 贴吧背景图 */
+    /*--bg:            url("../img/bg.jpg");*/
+    /*--bg-blur:       url("../img/bg-blur.jpg");*/
+    /*--bg-blur-cover: url("../img/bg-blur-cover.jpg");*/
+    --bg:            url("https://i.loli.net/2020/04/16/v69oLONh37DKUQP.jpg");
+    --bg-blur:       url("https://i.loli.net/2020/04/16/NtOV31kzdQ92fow.jpg");
+    --bg-blur-cover: url("https://i.loli.net/2020/04/16/RCXSlAQZno7sWeD.jpg");
+    /* 管理页背景图 */
+    --default-admin-color: #F0B478;
+    --admin-bg-color: #C08761;
+    --abg:            url("../img/bg.jpg");
+    --abg-blur:       url("../img/bg-blur.jpg");
+    --abg-blur-cover: url("../img/bg-blur-cover.jpg");
+    --abg-00: url("../img/00.jpg");
+    --abg-01: url("../img/01.jpg");
+    --abg-02: url("../img/02.jpg");
+    --abg-03: url("../img/03.jpg");
+    --abg-04: url("../img/04.jpg");
+}
+
 input:focus,
 textarea:focus,
 span:focus,

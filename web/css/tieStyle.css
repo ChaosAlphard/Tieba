@@ -1,8 +1,6 @@
 body{
     margin: 0;
-    background: #291D43 url("https://s2.ax1x.com/2020/03/05/3TiRV1.jpg") fixed top center / cover;
-    --BC:#9370DD; /* border color */
-    --BCA:#9370DD33;
+    background: var(--default-color) var(--bg) fixed top center / cover;
 }
 .base{
     position: relative;
@@ -134,7 +132,7 @@ body{
 .reMain fieldset,.replyContent fieldset{
     padding: 0 5px 5px 5px;
     margin: 0 0 5px 0;
-    background-color: var(--BCA);
+    background-color: var(--BC-alpha-33);
 }
 
 /* 翻页 */

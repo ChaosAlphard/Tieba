@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    background: #291D43 url("https://s2.ax1x.com/2020/03/05/3TiRV1.jpg") fixed top center / cover;
+    background: var(--default-color) var(--bg) fixed top center / cover;
 }
 .base{
     position: relative;
@@ -11,8 +11,8 @@ body{
     margin: 128px auto;
     width: 1200px;
     border-radius: 36px;
-    box-shadow: 0 0 10px 10px #9370DD inset;
-    background: url("https://s2.ax1x.com/2020/03/05/3TiWUx.jpg") fixed top center / cover;
+    box-shadow: 0 0 10px 10px var(--BC) inset;
+    background: var(--default-color) var(--bg-blur) fixed top center / cover;
 }
 .ruleDiv{
     font-size: 24px;
@@ -24,7 +24,7 @@ body{
 }
 .searchForm>form{
     display: flex;
-    border: 1px solid #9370DD;
+    border: 1px solid var(--BC);
 }
 .searchForm>form>*{
     padding: 0;
