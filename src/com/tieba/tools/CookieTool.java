@@ -1,10 +1,10 @@
-package com.tools;
+package com.tieba.tools;
 
 import javax.servlet.http.Cookie;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CM {
+public class CookieTool {
     public static Map<String,Cookie> setCookieMap(Cookie[] cookies){
         Map<String,Cookie> ckMap = new HashMap<>();
         if(cookies!=null){

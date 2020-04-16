@@ -1,4 +1,4 @@
-package com.tools;
+package com.tieba.tools;
 
 import java.util.List;
 

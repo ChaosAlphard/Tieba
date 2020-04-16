@@ -1,12 +1,10 @@
-package com.test;
+package com.tieba.test;
 
-import com.dao.BarDao;
-import com.dao.UserDao;
-import com.model.Bar;
-import com.model.User;
-import net.sf.json.JSONArray;
+import com.tieba.dao.BarDao;
+import com.tieba.dao.UserDao;
+import com.tieba.model.Bar;
+import com.tieba.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
