@@ -39,8 +39,6 @@
     <div class="rightblock"></div>
 </div>
 
-<div class="footer"><a href="AdminPage/login.jsp" target="_blank" rel="noopener">管理员登陆</a></div>
-
 <script src="js/indexMain.js"></script>
 </body>
 </html>

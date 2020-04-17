@@ -216,13 +216,3 @@ body{
 .tieTime{
     height: 40px;
 }
-
-.footer{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.footer>a{
-    color: var(--BC);
-    text-decoration: none;
-}

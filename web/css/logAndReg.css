@@ -111,6 +111,18 @@
     margin-top: 20px;
 }
 
+/* 管理员登录 */
+.footer{
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+.footer>a{
+    color: #CCCCCC;
+    text-decoration: none;
+    font-size: 14px;
+}
+
 /* 注册相关 */
 .regdiv{
     background: var(--default-color) var(--bg-blur) fixed top center / cover;

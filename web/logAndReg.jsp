@@ -25,6 +25,8 @@
                 <input id="fuid" type="hidden" name="uid">
                 <input id="fusr" type="hidden" name="usr">
             </div>
+
+            <div class="footer"><a href="AdminPage/login.jsp" target="_blank" rel="noopener">管理员登陆</a></div>
         </div>
     </form>
     <div class="regdiv" style="display: none">
