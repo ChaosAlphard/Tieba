@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
 public class LogoutServlet extends HttpServlet {
@@ -23,12 +24,12 @@ public class LogoutServlet extends HttpServlet {
         if(cs!=null){
             for (Cookie c : cs) {
                 if(c.getName().equals("uid")){
-                    uid = c.getValue();
+                    uid = URLDecoder.decode(c.getValue(),"UTF-8");
                     c.setMaxAge(0);//设为0表示立即删除
                     response.addCookie(c);
                 }
                 if(c.getName().equals("usr")){
-                    usr = c.getValue();
+                    usr = URLDecoder.decode(c.getValue(),"UTF-8");
                     c.setMaxAge(0);
                     response.addCookie(c);
                 }
