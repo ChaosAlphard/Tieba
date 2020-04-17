@@ -13,7 +13,9 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "NewReplyServlet", urlPatterns = {"/NewReplyServlet"})
 public class NewReplyServlet extends HttpServlet {
-    protected synchronized void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private final byte[] locker = new byte[0];
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         String result = "err";
@@ -35,9 +37,11 @@ public class NewReplyServlet extends HttpServlet {
         &&tieID.matches("^[0-9]+$")&&uid.matches("^[0-9]+$")
         &&main.length()>0&&main.length()<10000){
 
-            int i = new NewTie().CreateNewReply(Integer.parseInt(tieID),main,usr,Integer.parseInt(uid));
-            if(i==2){
-                result = "suc";
+            synchronized(locker) {
+                int i = new NewTie().CreateNewReply(Integer.parseInt(tieID),main,usr,Integer.parseInt(uid));
+                if(i==2){
+                    result = "suc";
+                }
             }
         } else {
             result = "dataErr";
