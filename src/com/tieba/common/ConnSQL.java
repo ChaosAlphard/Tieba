@@ -8,8 +8,10 @@ import java.sql.SQLException;
 
 public class ConnSQL implements AutoCloseable {
     private static final String url="jdbc:mysql://127.0.0.1:3306/Tieba?useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=utf8";
+//    private static final String url="jdbc:mysql://106.13.8.174:3306/Tieba?useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=utf8";
     private static final String usr="root";
     private static final String pwd="123456";
+//    private static final String pwd="147158zxc26795";
 
     private Connection connection;
 
@@ -24,11 +26,9 @@ public class ConnSQL implements AutoCloseable {
             this.connection.setAutoCommit(isAutoCommit);
             logInfo("连接成功, 自动提交设为: "+isAutoCommit);
         } catch(ClassNotFoundException e) {
-            logError("链接失败, 找不到驱动");
-            e.printStackTrace();
+            logError("链接失败, 找不到驱动\n"+e.getMessage());
         } catch(SQLException e) {
-            logError("链接失败, 数据库错误");
-            e.printStackTrace();
+            logError("链接失败, 数据库错误\n"+e.getMessage());
         }
     }
 
@@ -45,8 +45,7 @@ public class ConnSQL implements AutoCloseable {
                 logInfo("关闭成功");
             } catch(SQLException e) {
                 connection=null;
-                logError("关闭失败, 关闭时出现错误, 已强制设为null");
-                e.printStackTrace();
+                logError("关闭失败, 关闭时出现错误, 已强制设为null\n"+e.getMessage());
             }
         } else {
             logError("关闭失败, 没有connection对象");

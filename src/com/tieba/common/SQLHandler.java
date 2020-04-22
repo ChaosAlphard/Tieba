@@ -28,6 +28,7 @@ public class SQLHandler {
             e.printStackTrace();
             return null;
         } catch(NullPointerException e) {
+            error("空指针异常");
             e.printStackTrace();
             return null;
         }
@@ -50,6 +51,7 @@ public class SQLHandler {
             e.printStackTrace();
             return new ArrayList<>(0);
         } catch(NullPointerException e) {
+            error("空指针异常");
             e.printStackTrace();
             return new ArrayList<>(0);
         }
@@ -92,6 +94,7 @@ public class SQLHandler {
             e.printStackTrace();
             return null;
         } catch(NullPointerException e) {
+            error("空指针异常");
             e.printStackTrace();
             return null;
         }
@@ -112,6 +115,7 @@ public class SQLHandler {
             e.printStackTrace();
             return 0;
         } catch(NullPointerException e) {
+            error("空指针异常");
             e.printStackTrace();
             return 0;
         }
