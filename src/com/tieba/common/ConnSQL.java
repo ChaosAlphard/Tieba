@@ -1,6 +1,6 @@
 package com.tieba.common;
 
-import com.tieba.tools.TimeTool;
+import com.tieba.tools.LogTool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,6 +13,8 @@ public class ConnSQL implements AutoCloseable {
 
     private Connection connection;
 
+    private static final LogTool log = LogTool.of(ConnSQL.class);
+
     public ConnSQL() {
         this(true);
     }
@@ -22,11 +24,11 @@ public class ConnSQL implements AutoCloseable {
             Class.forName("com.mysql.jdbc.Driver");
             this.connection = DriverManager.getConnection(url,usr,pwd);
             this.connection.setAutoCommit(isAutoCommit);
-            logInfo("连接成功, 自动提交设为: "+isAutoCommit);
+            log.info("连接成功, 自动提交设为: "+isAutoCommit);
         } catch(ClassNotFoundException e) {
-            logError("链接失败, 找不到驱动\n"+e.getMessage());
+            log.exception("链接失败, 找不到驱动", e);
         } catch(SQLException e) {
-            logError("链接失败, 数据库错误\n"+e.getMessage());
+            log.exception("链接失败, 数据库错误", e);
         }
     }
 
@@ -40,21 +42,13 @@ public class ConnSQL implements AutoCloseable {
             try {
                 connection.close();
                 connection=null;
-                logInfo("关闭成功");
+                log.info("关闭成功");
             } catch(SQLException e) {
                 connection=null;
-                logError("关闭失败, 关闭时出现错误, 已强制设为null\n"+e.getMessage());
+                log.exception("关闭失败, 关闭时出现错误, 已强制设为null", e);
             }
         } else {
-            logError("关闭失败, 没有connection对象");
+            log.error("关闭失败, 没有connection对象");
         }
-    }
-
-    private static void logInfo(Object o) {
-        System.out.println(TimeTool.getCurrentTime()+" ConnSQL[ Info ]: "+o);
-    }
-
-    private static void logError(Object o) {
-        System.out.println(TimeTool.getCurrentTime()+" ConnSQL[ Error ]: "+o);
     }
 }

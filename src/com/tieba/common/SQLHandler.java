@@ -1,7 +1,7 @@
 package com.tieba.common;
 
 import com.tieba.tools.DBTool;
-import com.tieba.tools.TimeTool;
+import com.tieba.tools.LogTool;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class SQLHandler {
+    private static final LogTool log = LogTool.of(SQLHandler.class);
+
     public static<T> T querySingle(String sql, Map<Integer, Object> params, Class<T> clazz) {
         try(ConnSQL conn = new ConnSQL(true);
             PreparedStatement pst = conn.getConn().prepareStatement(sql)) {
@@ -23,13 +25,8 @@ public class SQLHandler {
             printSQL(pst);
 
             return t;
-        } catch(SQLException e) {
-            error("查询失败");
-            e.printStackTrace();
-            return null;
-        } catch(NullPointerException e) {
-            error("空指针异常");
-            e.printStackTrace();
+        } catch(SQLException | NullPointerException e) {
+            log.exception("查询失败", e);
             return null;
         }
     }
@@ -46,13 +43,8 @@ public class SQLHandler {
             printSQL(pst);
 
             return lis;
-        } catch(SQLException e) {
-            error("查询失败");
-            e.printStackTrace();
-            return new ArrayList<>(0);
-        } catch(NullPointerException e) {
-            error("空指针异常");
-            e.printStackTrace();
+        } catch(SQLException | NullPointerException e) {
+            log.exception("查询失败", e);
             return new ArrayList<>(0);
         }
     }
@@ -81,7 +73,7 @@ public class SQLHandler {
                     break;
                 }
                 default: {
-                    error("无法匹配对应的Column类型: "+clazz.getTypeName());
+                    log.error("无法匹配对应的Column类型: "+clazz.getTypeName());
                     break;
                 }
             }
@@ -89,13 +81,8 @@ public class SQLHandler {
             rs.close();
             printSQL(pst);
             return t;
-        } catch(SQLException e) {
-            error("查询失败");
-            e.printStackTrace();
-            return null;
-        } catch(NullPointerException e) {
-            error("空指针异常");
-            e.printStackTrace();
+        } catch(SQLException | NullPointerException e) {
+            log.exception("查询失败", e);
             return null;
         }
     }
@@ -110,13 +97,8 @@ public class SQLHandler {
 
             printSQL(pst);
             return res;
-        } catch(SQLException e) {
-            error("更新失败");
-            e.printStackTrace();
-            return 0;
-        } catch(NullPointerException e) {
-            error("空指针异常");
-            e.printStackTrace();
+        } catch(SQLException | NullPointerException e) {
+            log.exception("更新失败", e);
             return 0;
         }
     }
@@ -136,20 +118,12 @@ public class SQLHandler {
                 pst.setInt(key, (int)value);
             }
             else {
-                error("设置查询参数失败["+key+"]: "+value);
+                log.error("设置查询参数失败["+key+"]: "+value);
             }
         }
     }
 
     private static void printSQL(PreparedStatement pst) {
-        info(pst.toString().split(": ")[1]);
-    }
-
-    private static void info(Object o) {
-        System.out.println(TimeTool.getCurrentTime()+" SQLHandler [ Info ]: "+o);
-    }
-
-    private static void error(Object o) {
-        System.out.println(TimeTool.getCurrentTime()+" SQLHandler [ Error ]: "+o);
+        log.debug(pst.toString().split(": ")[1]);
     }
 }
