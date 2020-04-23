@@ -2,20 +2,21 @@ package com.tieba.tools;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class TimeTool {
+    private static final DateTimeFormatter formatPattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     public static String getCurrentTime(){
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(d);
+        return formatPattern.format(LocalDateTime.now());
     }
     public static String formatTime(Date d){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-        return sdf.format(d);
+        return formatPattern.format(LocalDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault()));
     }
     public static String formatTime(Timestamp t){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-        return sdf.format(t);
+        return formatPattern.format(LocalDateTime.ofInstant(t.toInstant(), ZoneId.systemDefault()));
     }
 }
