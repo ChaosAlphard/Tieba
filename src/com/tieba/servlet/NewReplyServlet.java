@@ -31,7 +31,7 @@ public class NewReplyServlet extends HttpServlet {
         String usr = request.getParameter("usr");
         String main = request.getParameter("main");
 
-        log.info("CreateNewReply: \n\tTieId: "
+        log.info("CreateNewReply:\n\tTieId: "
                 +tieID+"\n\tUserId: "+uid+
                 "\n\tUserName: "+usr+
                 "\n\tReplyContent: "+main);

@@ -33,7 +33,7 @@ public class NewTieServlet extends HttpServlet {
         String title = request.getParameter("title");
         String main = request.getParameter("main");
 
-        log.info("CreateNewTie: \n\tBarId: "
+        log.info("CreateNewTie:\n\tBarId: "
                 +barID+"\n\tUserId: "+uid+
                 "\n\tUserName: "+usr+
                 "\n\tTieTitle: "+title+
