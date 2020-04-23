@@ -59,6 +59,10 @@ public class LogTool {
         this.printMessage(str, " Info");
     }
 
+    public void warn(String str) {
+        this.printMessage(str, " Warn");
+    }
+
     public void error(String str) {
         this.printMessage(str, "Error");
     }

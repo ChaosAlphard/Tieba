@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBTool {
+    private static final LogTool log = LogTool.of(DBTool.class);
+
     private static<T> T setEntity(ResultSet rs, Class<T> data) {
         Field[] declaredFields = data.getDeclaredFields();
         T t = getNewInstance(data);
@@ -31,14 +33,14 @@ public class DBTool {
                     field.set(t,rs.getInt(field.getName()));
                 }
                 else {
-                    error("匹配不到对应类型: "+field.getType()+" 字段: "+field.getName());
+                    log.error("匹配不到对应类型: "+field.getType()+" 字段: "+field.getName());
                 }
             } catch(IllegalAccessException e) {
-                error("ResultSet映射到DataEntity失败\n类型: "
-                        +field.getType()+" 字段: "+field.getName());
+                log.exception("ResultSet映射到DataEntity失败\n类型: "
+                        +field.getType()+" 字段: "+field.getName(), e);
                 e.printStackTrace();
             } catch(SQLException e){
-                error("ResultSet中找不到对应的字段: "+field.getName());
+                log.error("ResultSet中找不到对应的字段: "+field.getName());
             } finally {
                 field.setAccessible(flag);
             }
@@ -51,7 +53,7 @@ public class DBTool {
         if(rs.next()) {
             return setEntity(rs, data);
         } else {
-            error("ResultSet中找不到数据");
+            log.warn("ResultSet中找不到数据");
             return null;
         }
     }
@@ -69,13 +71,9 @@ public class DBTool {
         try {
             return data.newInstance();
         } catch(InstantiationException | IllegalAccessException e) {
-            error("创建DataEntity失败, 实体类必须要有一个公共(public)的无参构造方法!");
+            log.error("创建DataEntity失败, 实体类必须要有一个公共(public)的无参构造方法!");
             e.printStackTrace();
             return null;
         }
-    }
-
-    private static void error(Object o) {
-        System.out.println("DBTool[ Error ]: "+o);
     }
 }
