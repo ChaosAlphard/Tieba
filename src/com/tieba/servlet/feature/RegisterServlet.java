@@ -25,7 +25,7 @@ public class RegisterServlet extends HttpServlet {
         String usr=request.getParameter("nickname");
         String pwd=request.getParameter("password");
 
-        log.info("Register========================================\n\tAccount: "
+        log.info("Register:\n\tAccount: "
                 +aot+"\n\tNickname: "+usr+"\n\tPassword: "+pwd);
 
         UserDao dao=new UserDao();
