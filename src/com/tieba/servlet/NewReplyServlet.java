@@ -1,6 +1,7 @@
 package com.tieba.servlet;
 
 import com.tieba.dao.NewTie;
+import com.tieba.tools.LogTool;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,8 @@ import java.io.PrintWriter;
 public class NewReplyServlet extends HttpServlet {
     private final byte[] locker = new byte[0];
 
+    private static final LogTool log = LogTool.of(NewReplyServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -28,7 +31,7 @@ public class NewReplyServlet extends HttpServlet {
         String usr = request.getParameter("usr");
         String main = request.getParameter("main");
 
-        System.out.println("CreateNewReply: \n\tTieId: "
+        log.info("CreateNewReply: \n\tTieId: "
                 +tieID+"\n\tUserId: "+uid+
                 "\n\tUserName: "+usr+
                 "\n\tReplyContent: "+main);

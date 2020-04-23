@@ -14,10 +14,6 @@ import java.util.List;
 
 @WebServlet(name = "FavTiesServlet", urlPatterns = {"/FavTiesServlet"})
 public class FavTiesServlet extends HttpServlet {
-    private void print(Object o) {
-        System.out.println("FavTiesServlet[log]: " + o);
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");

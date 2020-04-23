@@ -1,6 +1,7 @@
 package com.tieba.servlet;
 
 import com.tieba.dao.NewTie;
+import com.tieba.tools.LogTool;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,11 +14,13 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "NewTieServlet", urlPatterns = {"/NewTieServlet"})
 public class NewTieServlet extends HttpServlet {
+    private static final LogTool log = LogTool.of(NewTieServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        System.out.println("NewTieServlet>>post================================================================================");
+        log.info("NewTieServlet>>post");
 
         String result = "err";
         HttpSession session = request.getSession();
@@ -30,7 +33,7 @@ public class NewTieServlet extends HttpServlet {
         String title = request.getParameter("title");
         String main = request.getParameter("main");
 
-        System.out.println("CreateNewTie: \n\tBarId: "
+        log.info("CreateNewTie: \n\tBarId: "
                 +barID+"\n\tUserId: "+uid+
                 "\n\tUserName: "+usr+
                 "\n\tTieTitle: "+title+
@@ -53,11 +56,12 @@ public class NewTieServlet extends HttpServlet {
         out.flush();
         out.close();
 
-        System.out.println("NewTieServlet<<post================================================================================");
+        log.info("NewTieServlet<<post");
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
     }
 }

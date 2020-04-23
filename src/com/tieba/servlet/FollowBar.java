@@ -1,6 +1,7 @@
 package com.tieba.servlet;
 
 import com.tieba.dao.BarFollowDao;
+import com.tieba.tools.LogTool;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +12,7 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "FollowBar", urlPatterns = {"/FollowBar"})
 public class FollowBar extends HttpServlet {
-    private void print(Object o) {
-        System.out.println("FollowBar[log]: " + o);
-    }
+    private static final LogTool log = LogTool.of(FollowBar.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
@@ -28,7 +27,7 @@ public class FollowBar extends HttpServlet {
         if(uid!=null&&uid.matches("^[0-9]+$")&&
         barID!=null&&barID.matches("^[0-9]+$")&&barName!=null){
 
-            print("follow: "+follow);
+            log.debug("follow: "+follow);
             int id = Integer.parseInt(uid);
             int bid= Integer.parseInt(barID);
             BarFollowDao dao = new BarFollowDao();

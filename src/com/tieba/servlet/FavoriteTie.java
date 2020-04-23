@@ -1,6 +1,7 @@
 package com.tieba.servlet;
 
 import com.tieba.dao.TieFavoriteDao;
+import com.tieba.tools.LogTool;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +12,7 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "FavoriteTie", urlPatterns = {"/FavoriteTie"})
 public class FavoriteTie extends HttpServlet {
-    private void print(Object o) {
-        System.out.println("FavoriteTie[log]: " + o);
-    }
+    private static final LogTool log = LogTool.of(FavoriteTie.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
@@ -28,7 +27,7 @@ public class FavoriteTie extends HttpServlet {
         if(uid!=null&&uid.matches("^[0-9]+$")&&
         tieID!=null&&tieID.matches("^[0-9]+$")&&tieTitle!=null){
 
-            print("fav: "+favorite);
+            log.debug("fav: "+favorite);
             int id = Integer.parseInt(uid);
             int tid= Integer.parseInt(tieID);
             TieFavoriteDao dao = new TieFavoriteDao();
