@@ -1,5 +1,6 @@
 package com.tieba.servlet.feature;
 
+import com.tieba.tools.LogTool;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import java.io.*;
 
 @WebServlet(name = "UploadServlet", urlPatterns = {"/UploadServlet"})
 public class UploadServlet extends HttpServlet {
+    private static final LogTool log = LogTool.of(UploadServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -57,7 +60,7 @@ public class UploadServlet extends HttpServlet {
                 }
             }
             String imgFile=path+ "/img/avatar/" +uid+".jpg";
-            System.out.println("保存至"+imgFile);
+            log.info("保存至"+imgFile);
             OutputStream outs = new FileOutputStream(imgFile);
             outs.write(b);
             outs.flush();
@@ -65,6 +68,7 @@ public class UploadServlet extends HttpServlet {
             uploadFlag="suc";
         } catch (IOException e) {
             uploadFlag="err";
+            log.exception("图像保存失败", e);
             e.printStackTrace();
         }
 
@@ -76,5 +80,6 @@ public class UploadServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
     }
 }

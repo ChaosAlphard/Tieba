@@ -2,6 +2,7 @@ package com.tieba.servlet.admin;
 
 import com.tieba.dao.UserDao;
 import com.tieba.model.User;
+import com.tieba.tools.LogTool;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "BannedUser", urlPatterns = {"/BannedUser"})
 public class BannedUser extends HttpServlet {
-    private void print(Object o) {System.out.println("ser.admin.BannedUser[log]: " + o);}
+    private static final LogTool log = LogTool.of(BannedUser.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -39,7 +40,7 @@ public class BannedUser extends HttpServlet {
             return;
         }
 
-        print(status);
+        log.info("status: "+status);
         int id = Integer.parseInt(uid);
         int i=0;
         UserDao dao = new UserDao();

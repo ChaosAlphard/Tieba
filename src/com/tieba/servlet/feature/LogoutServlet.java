@@ -1,5 +1,7 @@
 package com.tieba.servlet.feature;
 
+import com.tieba.tools.LogTool;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +11,8 @@ import java.net.URLDecoder;
 
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
 public class LogoutServlet extends HttpServlet {
+    private static final LogTool log = LogTool.of(LogoutServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -41,7 +45,7 @@ public class LogoutServlet extends HttpServlet {
         session.removeAttribute("usr");
         session.invalidate();//销毁session
 
-        System.out.println("==================== ["+uid+"]"+usr+" 注销 ====================");
+        log.info("["+uid+"]"+usr+" 注销");
         RequestDispatcher dis = request.getRequestDispatcher("otherPage/logOut.jsp");
         dis.forward(request,response);
     }

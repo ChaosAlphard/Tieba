@@ -1,6 +1,7 @@
 package com.tieba.servlet.admin;
 
 import com.tieba.dao.TieDao;
+import com.tieba.tools.LogTool;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +14,7 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "SetElite", urlPatterns = {"/SetElite"})
 public class SetElite extends HttpServlet {
-    private void print(Object o){
-        System.out.println("ser.admin.SetElite[log]: "+o);
-    }
+    private static final LogTool log = LogTool.of(SetElite.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -29,7 +28,7 @@ public class SetElite extends HttpServlet {
 
         if(lv!=null&&(lv.equals("2")||lv.equals("3"))) {
             if (tieID != null && tieID.matches("^[0-9]+$")) {
-                print("status:"+status);
+                log.info("status: "+status);
                 int id = Integer.parseInt(tieID);
                 switch (status) {
                     case "0":

@@ -1,6 +1,7 @@
 package com.tieba.servlet.admin;
 
 import com.tieba.dao.UserDao;
+import com.tieba.tools.LogTool;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,24 +14,23 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "AdminLogin", urlPatterns = {"/AdminLogin"})
 public class AdminLogin extends HttpServlet {
+    private static final LogTool log = LogTool.of(AdminLogin.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        System.out.println("AdminLogin>>post================================================================================");
+        log.info("AdminLogin>>post");
 
         String result = "err";
 
         String account = request.getParameter("aot");
         String password = request.getParameter("pwd");
 
-        System.out.println(account);
-        System.out.println(password);
-
         HttpSession session = request.getSession();
 
         String[] info = new UserDao().AdminLogin(account,password);
-        System.out.println("info:"+info[0]+"-"+info[1]+"-"+info[2]);
+        log.info("admin:"+info[0]+"-"+info[1]+"-"+info[2]);
 
         if(info[0]!=null&&info[1]!=null&&info[2]!=null){
             if(info[2].equals("2")||info[2].equals("3")){
@@ -45,14 +45,12 @@ public class AdminLogin extends HttpServlet {
             result="daoErr";
         }
 
-        System.out.println("LoginResult>>"+result);
-
         PrintWriter out = response.getWriter();
         out.print(result);
         out.flush();
         out.close();
 
-        System.out.println("AdminLogin<<post================================================================================");
+        log.info("AdminLogin<<post");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

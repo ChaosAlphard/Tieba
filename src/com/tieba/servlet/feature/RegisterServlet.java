@@ -2,6 +2,7 @@ package com.tieba.servlet.feature;
 
 import com.tieba.dao.UserDao;
 import com.tieba.model.User;
+import com.tieba.tools.LogTool;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,8 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
 public class RegisterServlet extends HttpServlet {
+    private static final LogTool log = LogTool.of(RegisterServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -22,7 +25,7 @@ public class RegisterServlet extends HttpServlet {
         String usr=request.getParameter("nickname");
         String pwd=request.getParameter("password");
 
-        System.out.println("Register========================================\n\tAccount: "
+        log.info("Register========================================\n\tAccount: "
                 +aot+"\n\tNickname: "+usr+"\n\tPassword: "+pwd);
 
         UserDao dao=new UserDao();
