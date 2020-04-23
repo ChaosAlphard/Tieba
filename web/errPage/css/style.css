@@ -1,15 +1,6 @@
 body{
     margin: 0;
-    background: url("../pic/bg01.png") fixed bottom center / cover;
-}
-.snow{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 8;
-    pointer-events: none;
+    background: #B06A92 url("../pic/bg.png") fixed bottom center / cover;
 }
 .info{
     position: absolute;
@@ -34,7 +25,7 @@ body{
     left: calc(50vw - 600px);
     width: 1200px;
     height: 400px;
-    background: url("../pic/bg01.png") fixed bottom center / cover;
+    background: url("../pic/bg.png") fixed bottom center / cover;
     filter: blur(5px);
     border-radius: 120px;
     z-index: 6;
