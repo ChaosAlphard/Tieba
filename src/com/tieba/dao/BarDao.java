@@ -46,8 +46,4 @@ public class BarDao {
 
         return SQLHandler.update(sql, map);
     }
-
-    private void log(Object o) {
-        System.out.println("BarDao [ Info ]: "+o);
-    }
 }

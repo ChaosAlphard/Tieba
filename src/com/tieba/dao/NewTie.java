@@ -2,6 +2,7 @@ package com.tieba.dao;
 
 import com.tieba.common.ConnSQL;
 import com.tieba.common.SQLHandler;
+import com.tieba.tools.LogTool;
 import com.tieba.tools.TimeTool;
 
 import java.sql.Connection;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewTie {
+    private static final LogTool log = LogTool.of(NewTie.class);
+
     public int CreateNewTie(int barID,String tieTitle,String tieMain,String tieUser,int tieUserID) {
         String time = TimeTool.getCurrentTime();
         String sql = "INSERT INTO ties(BarID, TieTitle, TieMain, TieUser, TieUserID, PostTime, UpdateTime, Visible, Elite)" +
@@ -46,10 +49,10 @@ public class NewTie {
                 rs.close();
             } else {
                 rs.close();
-                error("获取帖子楼层信息失败");
+                log.error("获取帖子楼层信息失败");
                 return 0;
             }
-            sqlInfo(step1PST);
+            this.sqlInfo(step1PST);
             step1PST.close();
             // End
 
@@ -68,11 +71,11 @@ public class NewTie {
 
             int step2Count = step2PST.executeUpdate();
             if(step2Count < 1) {
-                error("插入失败");
+                log.error("插入失败");
                 connection.rollback();
                 return -1;
             }
-            sqlInfo(step2PST);
+            this.sqlInfo(step2PST);
             // End
 
             // Step3 更新帖子的回复时间
@@ -84,24 +87,26 @@ public class NewTie {
 
             int step3Count = step3PST.executeUpdate();
             if(step3Count < 1) {
-                error("更新失败");
+                log.error("更新失败");
                 connection.rollback();
                 return -1;
             }
-            sqlInfo(step3PST);
+            this.sqlInfo(step3PST);
             // End
 
             connection.commit();
+            log.info("提交成功");
             step2PST.close();
             step3PST.close();
 
             return 2;
         } catch(SQLException e) {
-            error("回复失败");
+            log.exception("回复失败", e);
             try {
                 connection.rollback();
+                log.info("回滚成功");
             } catch(SQLException ex) {
-                error("====================回滚失败====================");
+                log.exception("====================回滚失败====================", ex);
                 ex.printStackTrace();
             }
             e.printStackTrace();
@@ -111,11 +116,7 @@ public class NewTie {
         }
     }
 
-    private static void sqlInfo(PreparedStatement pst) {
-        System.out.println("NewTie [ SQL ]: "+pst.toString().split(": ")[1]);
-    }
-
-    private static void error(Object o) {
-        System.out.println("NewTie [ Error ]: "+o);
+    private void sqlInfo(PreparedStatement pst) {
+        log.debug(pst.toString().split(": ")[1]);
     }
 }

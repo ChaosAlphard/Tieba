@@ -98,19 +98,4 @@ public class TieDao {
 
         return SQLHandler.update(sql, map);
     }
-
-    //public List<Tie> FindTiesByBarID(int barID) throws SQLException {
-    //    String sql = "SELECT * FROM ties,tiereply" +
-    //    " WHERE BarID=? AND bars.BarID=ties.BarID" +
-    //    " ORDER BY ties.Time DESC LIMIT 0,1";
-    //    List<Tie> lis = new ArrayList<>();
-    //    PreparedStatement pst = conn.prepareStatement(sql);
-    //    pst.setInt(1,barID);
-    //    ResultSet rs = pst.executeQuery();
-    //    setTieList(lis,rs);
-    //    System.out.println("FindTiesByBarID>>>>\n"+pst.toString());
-    //    rs.close();
-    //    pst.close();
-    //    return lis;
-    //}
 }
