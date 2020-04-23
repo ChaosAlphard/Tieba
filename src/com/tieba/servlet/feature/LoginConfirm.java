@@ -25,7 +25,7 @@ public class LoginConfirm extends HttpServlet {
         HttpSession session=request.getSession();
         session.setAttribute("uid",uid);
         session.setAttribute("usr",usr);
-        log.info("SetSession>>\n\tuid:"+uid+"\n\tusr:"+usr);
+        log.info("SetSession: uid: "+uid+"  usr: "+usr);
 
         String id = URLEncoder.encode(uid,"UTF-8");
         String name=URLEncoder.encode(usr,"UTF-8");

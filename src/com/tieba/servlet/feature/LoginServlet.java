@@ -75,9 +75,9 @@ public class LoginServlet extends HttpServlet {
             if(uid!=null&&usr!=null){
                 HttpSession session=request.getSession();
                 log.info("SessionID: "+session.getAttribute("uid")+
-                                   "      \tCookieID: "+uid +
-                                   "\nSessionUser: "+session.getAttribute("usr")+
-                                   "  \tCookieUser: "+usr);
+                        "  SessionUser: "+session.getAttribute("usr")+
+                        "  CookieID: "+uid+
+                        "  CookieUser: "+usr);
                 if(session.getAttribute("uid")==null||session.getAttribute("usr")==null){
                     session.setAttribute("uid",uid);
                     session.setAttribute("usr",usr);
